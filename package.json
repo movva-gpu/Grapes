@@ -2,7 +2,8 @@
   "name": "ws202",
   "type": "module",
   "scripts": {
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "gulp": "gulp"
   },
   "devDependencies": {
     "@prettier/plugin-php": "^0.22.2",
