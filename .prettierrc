@@ -1,0 +1,25 @@
+{
+  "arrowParens": "avoid",
+  "bracketSameLine": true,
+  "bracketSpacing": true,
+  "endOfLine": "crlf",
+  "htmlWhitespaceSensitivity": "strict",
+  "plugins": ["@prettier/plugin-php"],
+  "tabWidth": 4,
+  "useTabs": false,
+  "printWidth": 100,
+  "overrides": [
+    {
+      "files": ["*.php", "*.module", "*.inc"],
+      "options": {
+        "parser": "php"
+      }
+    },
+    {
+      "files": ["*.css", "*.json", "*.jsonc", ".prettierrc"],
+      "options": {
+        "tabWidth": 2
+      }
+    }
+  ]
+}
