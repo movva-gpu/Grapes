@@ -1,21 +1,17 @@
 import fs from 'node:fs';
-import { dest, parallel, series, src, task } from "gulp";
-import rename from "gulp-rename";
-import header from "gulp-header";
+import { dest, parallel, series, src, task } from 'gulp';
+import rename from 'gulp-rename';
+import header from 'gulp-header';
 
-import uglify from "gulp-uglify";
-import babel from "gulp-babel";
+import uglify from 'gulp-uglify';
+import babel from 'gulp-babel';
 
-import postcss from "gulp-postcss";
-import cssnano from "cssnano";
-import autoprefixer from "autoprefixer";
-import postcssNested from "postcss-nested";
+import postcss from 'gulp-postcss';
+import cssnano from 'cssnano';
+import autoprefixer from 'autoprefixer';
+import postcssNested from 'postcss-nested';
 
-const postcss_plugins = [
-    postcssNested(),
-    autoprefixer(),
-    cssnano()
-];
+const postcss_plugins = [postcssNested(), autoprefixer(), cssnano()];
 
 task('clean', cb => {
     fs.accessSync('.');
@@ -33,32 +29,18 @@ task('clean', cb => {
 task('minifyCSS', () => {
     return src('./assets/css/**/*.css')
         .pipe(postcss(postcss_plugins))
-        .pipe(header(
-            '/* minified with gulp.js\r\n' +
-            ' * all rights reserved.\r\n' +
-            ' */'
-        ))
+        .pipe(header('/* minified with gulp.js\r\n' + ' * all rights reserved.\r\n' + ' */'))
         .pipe(rename({ extname: 'min.css' }))
         .pipe(dest('./dest/css'));
 });
 
 task('minifyJS', () => {
     return src('./assets/js/**/*.js')
-    .pipe(babel())
-    .pipe(uglify())
-    .pipe(header(
-        '/* minified with gulp.js\r\n' +
-        ' * all rights reserved.\r\n' +
-        ' */'
-    ))
-    .pipe(rename({ extname: 'min.js' }))
-    .pipe(dest('./dest/js'));
+        .pipe(babel())
+        .pipe(uglify())
+        .pipe(header('/* minified with gulp.js\r\n' + ' * all rights reserved.\r\n' + ' */'))
+        .pipe(rename({ extname: 'min.js' }))
+        .pipe(dest('./dest/js'));
 });
 
-task('default', series(
-    'clean',
-    parallel(
-        'minifyJS',
-        'minifyCSS'
-    )
-));
+task('default', series('clean', parallel('minifyJS', 'minifyCSS')));
