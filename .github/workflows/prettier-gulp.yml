@@ -28,3 +28,5 @@ jobs:
         bun install
         bun format
         bun run gulp
+        git commit -am "Ran prettier and gulp"
+        git push
