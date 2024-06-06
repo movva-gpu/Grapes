@@ -1,0 +1,27 @@
+English version : /humans.en.txt
+
+/* TEAM */
+Développeur front-end : Hamza Senini
+
+Web, UX et UI designer : Eglantine Fernandes
+
+Graphiste, web et UI designer : Noam Brodeur
+
+Développeuse back-end : Danyella Strikann
+
+/* THANKS */
+À tout nos professeurs.
+
+/* SITE */
+Dernière MàJ : 06/06/2024
+Langue : fr_fr
+Doctype : html
+Standards : HTML5/CSS3, Babel, PHP 8.3
+Frameworks : PHP 8.3 de base
+Logiciels : Figma (Design et brainstorming) ;
+            Visual Studio Code (et VSCodium) et PHPStorm (IDE) ;
+            Powershell, CMD et Git Bash (shell) ;
+            Arc, Chrome et Firefox (navigateur et débogage) ; Windows (OS) ;
+            Binaires Windows de PHP 8.3 et Docker (Environment de dev) ;
+            GitHub et Git (VCS)
+Source : https://github.com/movva-gpu/Grapes

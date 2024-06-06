@@ -10,6 +10,8 @@ $page_title = ($page_title ?? 'Document sans titre') . ' - ' . APP_NAME;
           content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $page_title ?></title>
+    <link rel="author" href="/humans.txt">
+    <link rel="author" href="/humans.en.txt">
     <link rel="stylesheet" href="<?= getAsset('css/styles.css') ?>">
     <script src="<?= getAsset('js/main.js') ?>" defer></script>
 </head>
