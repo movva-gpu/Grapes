@@ -1,9 +1,0 @@
-{
-  "cSpell.language": "en,fr",
-  "cSpell.words": ["cssnano"],
-  "conventionalCommits.scopes": [
-    "build",
-    "formatting",
-    "backend"
-  ]
-}
