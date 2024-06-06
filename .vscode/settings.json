@@ -1,6 +1,9 @@
 {
   "cSpell.language": "en,fr",
-  "cSpell.words": ["cssnano"],
+  "cSpell.words": [
+    "cssnano",
+    "ONLYDIR"
+  ],
   "conventionalCommits.scopes": [
     "build",
     "formatting",
