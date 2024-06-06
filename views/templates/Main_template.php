@@ -1,8 +1,5 @@
 <?php
 $page_title = ($page_title ?? 'Document sans titre') . ' - ' . APP_NAME;
-if (http_response_code() !== 200) {
-    $page_title = 'Erreur ' . http_response_code() . ' - ' . APP_NAME;
-}
 ?>
 
 <!doctype html>
@@ -23,7 +20,7 @@ if (http_response_code() !== 200) {
         <?php if (http_response_code() !== 200) {
             echo '<h1 style="text-align: center">Erreur ' . http_response_code() . '</h1>';
         } else {
-            require viewsPath($GLOBALS['page_name'] . '_view.php');
+            require viewsPath($view_name . '_view.php');
         } ?>
     </main>
 

@@ -12,13 +12,39 @@ function parse_url_path(string $url): string
     return parse_url($url)['path'];
 }
 
+/**
+ * Finds the appropriate controller directory based on the page name
+ * @param $pageName string
+ * @return string|null
+ */
+function find_controller_directory(string $pageName): ?string
+{
+    $directories = glob(rootPath('controllers/*'), GLOB_ONLYDIR);
+
+    foreach ($directories as $directory) {
+        $dirname = basename($directory);
+
+        foreach (explode('+', $dirname) as $route) {
+            if ($route === $pageName && file_exists(separatesPath($directory . '/controller.php'))) {
+                return $directory;
+            }
+        }
+    }
+
+    header('Location: /404', true);
+    exit;
+}
+
+
 $path = parse_url_path($_SERVER['REQUEST_URI']);
 
 $path_parts = explode('/', $path);
 
-$GLOBALS['page_name'] = empty($path_parts[1]) ? 'Home' : ucfirst($path_parts[1]);
+$page_name = empty($path_parts[1]) ? 'home' : $path_parts[1];
 $action = empty($path_parts[2]) ? 'index' : $path_parts[2];
 
-require_once rootPath('controllers/' . $GLOBALS['page_name'] . '_controller.php');
+$controller_dir = find_controller_directory($page_name);
+
+require_once separatesPath($controller_dir . '/controller.php');
 
 $action();
