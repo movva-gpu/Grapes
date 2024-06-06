@@ -31,7 +31,7 @@ task('minifyCSS', () => {
         .pipe(postcss(postcss_plugins))
         .pipe(header('/* minified with gulp.js\r\n' + ' * all rights reserved.\r\n' + ' */'))
         .pipe(rename({ extname: 'min.css' }))
-        .pipe(dest('./dest/css'));
+        .pipe(dest('./dist/css'));
 });
 
 task('minifyJS', () => {
@@ -40,7 +40,7 @@ task('minifyJS', () => {
         .pipe(uglify())
         .pipe(header('/* minified with gulp.js\r\n' + ' * all rights reserved.\r\n' + ' */'))
         .pipe(rename({ extname: 'min.js' }))
-        .pipe(dest('./dest/js'));
+        .pipe(dest('./dist/js'));
 });
 
 task('default', series('clean', parallel('minifyJS', 'minifyCSS')));
