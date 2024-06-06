@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @param string $path - Please use `/` not `\\`
- * @return string - If on windows, `folder/file` will be turned into `folder\file`
+ * @param string $path Please use `/` not `\\`
+ * @return string If on windows, `folder/file` will be turned into `folder\file`
  */
 function separatesPath(string $path): string
 {
@@ -10,8 +10,8 @@ function separatesPath(string $path): string
 }
 
 /**
- * @param string $path - Path to a file in the root dir.
- * @return string - Absolute path to that file. (even if it doesn't exist).
+ * @param string $path Path to a file in the root dir.
+ * @return string Absolute path to that file. (even if it doesn't exist).
  */
 function rootPath(string $path): string
 {
@@ -19,8 +19,8 @@ function rootPath(string $path): string
 }
 
 /**
- * @param string $path - Path to a file in the views' directory.
- * @return string - Absolute path to that file. (even if it doesn't exist).
+ * @param string $path Path to a file in the views' directory.
+ * @return string Absolute path to that file. (even if it doesn't exist).
  */
 function viewsPath(string $path): string
 {

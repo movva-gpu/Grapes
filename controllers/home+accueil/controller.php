@@ -1,6 +1,6 @@
 <?php
 
-function index() : void
+function index(): void
 {
     $page_title = 'Accueil';
     $view_name = 'Home';

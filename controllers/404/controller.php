@@ -1,6 +1,6 @@
 <?php
 
-function index() : void
+function index(): void
 {
     http_response_code(404);
     $GLOBALS['404'] = true;

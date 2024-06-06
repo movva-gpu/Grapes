@@ -1,6 +1,5 @@
 <?php
-$page_title = ($page_title ?? 'Document sans titre') . ' - ' . APP_NAME;
-?>
+$page_title = ($page_title ?? 'Document sans titre') . ' - ' . APP_NAME; ?>
 
 <!doctype html>
 <html lang="fr">
@@ -16,7 +15,7 @@ $page_title = ($page_title ?? 'Document sans titre') . ' - ' . APP_NAME;
     <script src="<?= getAsset('js/main.js') ?>" defer></script>
 </head>
 <body style="font-family: system-ui, -apple-system, sans-serif">
-    <?php require viewsPath('shared/Header.inc.php') ?>
+    <?php require viewsPath('shared/Header.inc.php'); ?>
 
     <main style="min-height: calc(90svh)">
         <?php if (http_response_code() !== 200) {
@@ -26,6 +25,6 @@ $page_title = ($page_title ?? 'Document sans titre') . ' - ' . APP_NAME;
         } ?>
     </main>
 
-    <?php require viewsPath('shared/Footer.inc.php') ?>
+    <?php require viewsPath('shared/Footer.inc.php'); ?>
 </body>
 </html>

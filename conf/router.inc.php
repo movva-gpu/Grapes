@@ -25,7 +25,10 @@ function find_controller_directory(string $pageName): ?string
         $dirname = basename($directory);
 
         foreach (explode('+', $dirname) as $route) {
-            if ($route === $pageName && file_exists(separatesPath($directory . '/controller.php'))) {
+            if (
+                $route === $pageName &&
+                file_exists(separatesPath($directory . '/controller.php'))
+            ) {
                 $GLOBALS['current_dir'] = $dirname;
                 return $directory;
             }
@@ -33,9 +36,8 @@ function find_controller_directory(string $pageName): ?string
     }
 
     header('Location: /404', true);
-    exit;
+    exit();
 }
-
 
 $path = parse_url_path($_SERVER['REQUEST_URI']);
 
@@ -48,4 +50,11 @@ $controller_dir = find_controller_directory($page_name);
 
 require_once separatesPath($controller_dir . '/controller.php');
 
-$action();
+if (function_exists($action)) {
+    $action();
+} elseif (file_exists(separatesPath($controller_dir . '/' . $action . '/controller.php'))) {
+    require_once separatesPath($controller_dir . '/' . $action . '/controller.php');
+} else {
+    header('Location: /404', true);
+    exit();
+}

@@ -1,16 +1,5 @@
 {
   "cSpell.language": "en,fr",
-  "cSpell.words": [
-    "cssnano",
-    "Danyella",
-    "Fernandes",
-    "ONLYDIR",
-    "Senini",
-    "Strikann"
-  ],
-  "conventionalCommits.scopes": [
-    "build",
-    "formatting",
-    "backend"
-  ]
+  "cSpell.words": ["cssnano", "Danyella", "Fernandes", "ONLYDIR", "Senini", "Strikann"],
+  "conventionalCommits.scopes": ["build", "formatting", "backend"]
 }
