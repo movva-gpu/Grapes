@@ -26,6 +26,7 @@ function find_controller_directory(string $pageName): ?string
 
         foreach (explode('+', $dirname) as $route) {
             if ($route === $pageName && file_exists(separatesPath($directory . '/controller.php'))) {
+                $GLOBALS['current_dir'] = $dirname;
                 return $directory;
             }
         }
