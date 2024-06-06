@@ -2,6 +2,7 @@
   "name": "ws202",
   "type": "module",
   "scripts": {
+    "dev": "php -S localhost:3333",
     "format": "prettier . --write",
     "gulp": "gulp"
   },

@@ -3,6 +3,7 @@
   "cSpell.words": ["cssnano"],
   "conventionalCommits.scopes": [
     "build",
-    "formatting"
+    "formatting",
+    "backend"
   ]
 }
