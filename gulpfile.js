@@ -18,7 +18,7 @@ task('clean', cb => {
     if (!fs.existsSync('./dist')) cb();
     else {
         try {
-            fs.rmdirSync('./dist');
+            fs.rmSync('./dist', { force: true, recursive: true });
             cb();
         } catch (err) {
             cb(err);
