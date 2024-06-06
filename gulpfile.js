@@ -18,7 +18,7 @@ task('clean', cb => {
     if (!fs.existsSync('./dist')) cb();
     else {
         try {
-            fs.rmdirSync('./dist');
+            fs.rmSync('./dist', { force: true, recursive: true });
             cb();
         } catch (err) {
             cb(err);
@@ -30,7 +30,7 @@ task('minifyCSS', () => {
     return src('./assets/css/**/*.css')
         .pipe(postcss(postcss_plugins))
         .pipe(header('/* minified with gulp.js\r\n' + ' * all rights reserved.\r\n' + ' */'))
-        .pipe(rename({ extname: 'min.css' }))
+        .pipe(rename({ extname: '.min.css' }))
         .pipe(dest('./dist/css'));
 });
 
@@ -39,7 +39,7 @@ task('minifyJS', () => {
         .pipe(babel())
         .pipe(uglify())
         .pipe(header('/* minified with gulp.js\r\n' + ' * all rights reserved.\r\n' + ' */'))
-        .pipe(rename({ extname: 'min.js' }))
+        .pipe(rename({ extname: '.min.js' }))
         .pipe(dest('./dist/js'));
 });
 
