@@ -55,3 +55,12 @@ function getAsset(string $path): string
                 ? $fileAssetsPath
                 : throw new InvalidArgumentException('Asset ' . $path . ' not found.', 404)));
 }
+
+enum ErrorTypesEnum
+{
+    case MissingField;
+    case TooLongField;
+    case RepeatPasswordNotEqual;
+    case BadEmailFormat;
+    case EmailDoesNotExist;
+}

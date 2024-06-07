@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
+
+error_reporting(E_ALL);
 
 const __ROOT__ = __DIR__;
 
@@ -8,4 +10,4 @@ include rootPath('vendor/autoload.php');
 
 require_once rootPath('conf/router.inc.php');
 
-session_abort();
+echo array_key_exists('error', $_SESSION);

@@ -9,5 +9,8 @@
       "email": "danyellastrikann@duck.com"
     }
   ],
-  "require": {}
+  "require": {
+    "thecodingmachine/safe": "^2.5",
+    "egulias/email-validator": "^4.0"
+  }
 }

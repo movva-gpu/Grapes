@@ -1,5 +1,13 @@
 <?php
-$page_title = ($page_title ?? 'Document sans titre') . ' - ' . APP_NAME; ?>
+$page_title = ($page_title ?? 'Document sans titre') . ' - ' . APP_NAME;
+print_r($_SESSION);
+
+session_start();
+
+print_r($_SESSION);
+$error = $_SESSION['error'] ?? '';
+unset($_SESSION['error']);
+?>
 
 <!doctype html>
 <html lang="fr">
@@ -18,13 +26,47 @@ $page_title = ($page_title ?? 'Document sans titre') . ' - ' . APP_NAME; ?>
     <?php require viewsPath('shared/Header.inc.php'); ?>
 
     <main style="min-height: calc(90svh)">
-        <?php if (http_response_code() !== 200) {
-            echo '<h1 style="text-align: center">Erreur ' . http_response_code() . '</h1>';
-        } else {
-            require viewsPath($view_name . '_view.php');
-        } ?>
+        <?php if (!empty($error)): ?>
+            <div class="error">
+                    Erreur : <?= (function($error)
+                    {
+                        switch ($error['error']['code'])
+                        {
+                            case ErrorTypesEnum::MissingField:
+                                $field = $error['error']['message'];
+                                switch ($field)
+                                {
+                                    case 'name':
+                                        $field_name = 'Nom';
+                                        break;
+                                    case 'fname':
+                                        $field_name = 'Prénom';
+                                        break;
+                                    case 'gender':
+                                        $field_name = 'Genre';
+                                        break;
+                                    case 'mail':
+                                        $field_name = 'Adresse e-mail';
+                                        break;
+                                }
+                                $toReturn = 'Le champ "' . $field_name . '"  est obligatoire.';
+                                break;
+                            default:
+                                # ...
+                                break;
+                        }
+                        return $toReturn;
+                    })($error) ?>
+            </div>
+        <?php unset($error); endif ?>
+
+        <?php require viewsPath($view_name . '_view.php'); ?>
     </main>
 
     <?php require viewsPath('shared/Footer.inc.php'); ?>
 </body>
 </html>
+
+<?php
+\Safe\session_write_close();
+?>

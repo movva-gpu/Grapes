@@ -12,13 +12,13 @@
     <fieldset>
         <legend>Genre</legend>
         <label for="gender-f">f</label>
-        <input type="radio" name="gender-f" id="gender" value="f">
+        <input type="radio" name="gender" id="gender-f" value="f">
         <label for="gender-m">m</label>
-        <input type="radio" name="gender-m" id="gender" value="m">
+        <input type="radio" name="gender" id="gender-m" value="m">
         <label for="gender-nb">nb</label>
-        <input type="radio" name="gender-nb" id="gender" value="nb">
+        <input type="radio" name="gender" id="gender-nb" value="nb">
         <label for="gender-no">no</label>
-        <input type="radio" name="gender-no" id="gender" value="no">
+        <input type="radio" name="gender" id="gender-no" value="no">
     </fieldset>
 
     <label for="mail" title="Champ obligatoire">Adresse e-mail<span style="color: red;">*</span></label>
@@ -27,11 +27,10 @@
     <label for="passwd" title="Champ obligatoire">Mot de passe<span style="color: red;">*</span></label>
     <input type="password" name="passwd" id="passwd" aria-required="true" required><br>
 
-    <label for="rep" title="Champ obligatoire">Répéter le mot de passe<span style="color: red;">*</span></label>
+    <label for="passwd-rep" title="Champ obligatoire">Répéter le mot de passe<span style="color: red;">*</span></label>
     <input type="password" name="passwd-rep" id="passwd-rep" aria-required="true" required><br>
 
     <button type="submit">S'inscrire</button>
-
 
     <footer>Vous avez déjà un compte ? <a href="/connexion">Se connecter</a></footer>
 </form>

@@ -2,8 +2,10 @@
 function is_current_page(string $pageName): bool
 {
     $current_dir = $GLOBALS['current_dir'];
-    foreach (explode('+', $current_dir) as $str) {
-        if ($pageName === $str) {
+    foreach (explode('+', $current_dir) as $str)
+    {
+        if ($pageName === $str)
+        {
             return true;
         }
     }
