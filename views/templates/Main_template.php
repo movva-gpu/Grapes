@@ -51,8 +51,36 @@ unset($_SESSION['error']);
                                 }
                                 $toReturn = 'Le champ "' . $field_name . '"  est obligatoire.';
                                 break;
+                            case ErrorTypesEnum::TooLongField:
+                                $field = $error['error']['message'];
+                                switch ($field)
+                                {
+                                    case 'name':
+                                        $field_name = 'Nom';
+                                        break;
+                                    case 'fname':
+                                        $field_name = 'Prénom';
+                                        break;
+                                    case 'gender':
+                                        $field_name = 'Genre';
+                                        break;
+                                    case 'mail':
+                                        $field_name = 'Adresse e-mail';
+                                        break;
+                                }
+                                $toReturn = 'Le champ "' . $field_name . '"  est trop long.';
+                                break;
+                            case ErrorTypesEnum::BadEmailFormat:
+                                $toReturn = 'Votre adresse e-mail est invalide.';
+                                break;
+                            case ErrorTypesEnum::EmailDoesNotExist:
+                                $toReturn = 'L\'adresse e-mail spécifiée n\'existe pas.';
+                                break;
+                            case ErrorTypesEnum::RepeatPasswordNotEqual:
+                                $toReturn = 'Les mots de passes spécifiés ne sont pas identiques.';
+                                break;
                             default:
-                                # ...
+                                $toReturn = 'Une erreur s\'est produite, veuillez réessayer.';
                                 break;
                         }
                         return $toReturn;
