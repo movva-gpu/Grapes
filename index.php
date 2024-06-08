@@ -1,5 +1,9 @@
 <?php declare(strict_types = 1);
 
+if (session_status() === PHP_SESSION_ACTIVE) {
+    \Safe\session_abort();
+}
+
 error_reporting(E_ALL);
 
 const __ROOT__ = __DIR__;
