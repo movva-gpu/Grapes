@@ -12,7 +12,8 @@
     "Senini",
     "SMTPS",
     "Strikann",
-    "thecodingmachine"
+    "thecodingmachine",
+    "troyes"
   ],
   "conventionalCommits.scopes": ["build", "formatting", "backend"]
 }

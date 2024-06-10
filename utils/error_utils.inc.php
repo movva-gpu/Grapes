@@ -22,4 +22,5 @@ enum ErrorTypes
     case SQL_ERROR;
     case ACCOUNT_WITH_EMAIL_ALREADY_EXISTS;
     case VERIFICATION_MAIL_NOT_SENT;
+    case WRONG_TOKEN;
 }

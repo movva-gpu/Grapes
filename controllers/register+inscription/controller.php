@@ -3,9 +3,9 @@
 use Egulias\EmailValidator\EmailValidator;
 use Egulias\EmailValidator\Validation\DNSCheckValidation;
 use Egulias\EmailValidator\Validation\RFCValidation;
+
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 
 function index(): void
 {
@@ -16,6 +16,19 @@ function index(): void
 }
 
 function validate(): void
+{
+    if (!isset($_GET['token']))
+    {
+        validate_registration();
+        return;
+    } else
+    {
+        validate_account();
+        return;
+    }
+}
+
+function validate_registration(): void
 {
     session_start();
 
@@ -100,14 +113,14 @@ function validate(): void
     /** @var PDO $db */
     $db = db_connect();
 
-    if (!$db)
+    if ($db === false)
     {
         set_session_error(ErrorTypes::SQL_ERROR);
         header('Location: /register');
         exit;
     }
 
-    $users_with_same_email = get_users_by_email($email, $db);
+    $users_with_same_email = users_by_email($email);
 
     if ($users_with_same_email === false)
     {
@@ -123,16 +136,16 @@ function validate(): void
         exit;
     }
 
-    $token = bin2hex(random_bytes(30));
+    $token = urlencode(bin2hex(random_bytes(30)));
 
     try
     {
         $stmt = $db->prepare(
             'INSERT INTO `users`(
-                `user_name`,
+                `user_last_name`,
                 `user_first_name`,
                 `user_nickname`,
-                `user_password`,
+                `user_password_hash`,
                 `user_email`,
                 `user_gender`,
                 `user_validation_token`
@@ -167,68 +180,123 @@ function validate(): void
     }
 
     $mailer = new PHPMailer(true);
-    $verification_url = SITE_URL . 'validate/account?token=' . urlencode($token);
+    $verification_url = SITE_URL . '/register/validate/account?token=' . urlencode($token);
 
     \Safe\session_abort();
+
+    if(send_verification_mail($mailer, $email, $fname, $name, $verification_url) === true) {
+        echo '👍';
+        header('Location: /inscription/validation');
+        exit;
+    }
+
+    echo '👎';
+    set_session_error(ErrorTypes::VERIFICATION_MAIL_NOT_SENT);
+    users_by_email($email, action: DBActions::DELETE);
+    header('Location: /inscription');
+    exit;
 }
 
-function send_verification_mail(PHPMailer $mailer, string $email, string $fname, string $name, string $verification_url)
+function send_verification_mail(PHPMailer $mailer, string $email, string $fname, string $name, string $verification_url): bool
 {
     try
     {
-        $mailer->SMTPDebug = SMTP::DEBUG_SERVER;
         $mailer->isSMTP();
-        $mailer->Host       = SMTP_SERVER;
-        $mailer->SMTPAuth   = true;
-        $mailer->Username   = EMAIL_ADDRESS;
-        $mailer->Password   = EMAIL_PASSWORD;
-        $mailer->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        $mailer->Port       = 465;
+        $mailer->Host        = SMTP_SERVER;
+        $mailer->SMTPAuth    = true;
+        $mailer->Username    = EMAIL_ADDRESS;
+        $mailer->Password    = EMAIL_PASSWORD;
+        $mailer->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+        $mailer->Port = 587;
 
-        $mailer->setFrom('no-reply@test.local');
+        $mailer->setFrom('no-reply@mmi-troyes.fr', 'Grapes 🍇');
         $mailer->addAddress($email, $fname . ' ' . $name);
 
         $mailer->isHTML(true);
+        $mailer->CharSet = 'UTF-8';
         $mailer->Subject = 'Grapes 🍇 - Mail de vérification';
         $mailer->Body    =
-            '<!doctype html>' . + "\r\n" .
-            '<html lang="en">' . + "\r\n" .
-            '<head>' . + "\r\n" .
-                '<meta charset="UTF-8" />' . + "\r\n" .
-                '<meta name="viewport" content="width=device-width, initial-scale=1.0" />' . + "\r\n" .
-                '<title>Document</title>' . + "\r\n" .
-                '<style>' . + "\r\n" .
-                    'body{margin:0;font-family:system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Oxygen, Ubuntu, Cantarell, \'Open Sans\', \'Helvetica Neue\', sans-serif;font-size:125%;line-height:1.5;background-color:whitesmoke;min-height:100vh}h1,p{margin:0}h1{line-height:0.8;margin-bottom:0.33em}p{color:color-mix(in srgb, currentColor, transparent 20%)}a{color:#75A358;text-decoration:1px solid underline}main{padding:2em;background-color:#f8eccf;border-bottom:2px #c2b79f solid}footer{bottom:0;display:flex;align-items:center;justify-content:center;height:4em;height:2lh;font-style:italic}.start{margin-bottom:0.8em}.button{display:block;color:white;width:fit-content;padding:1em 2em;margin-bottom:0.5em;margin-inline:auto;background-color:#4B755F;outline:4px solid black;text-decoration:none;border-radius:1em}small{display:block;width:fit-content;margin-bottom:1em;margin-inline:auto;font-style:italic}.fname{font-weight:bold}' . + "\r\n" .
-                '</style>' . + "\r\n" .
-            '</head>' . + "\r\n" .
-            '<body>' . + "\r\n" .
-                '<main>' . + "\r\n" .
-                    '<h1>Mail de vérification</h1>' . + "\r\n" .
-                    '<p class="start">' . + "\r\n" .
-                        'Hey <span class="fname">' . $fname . '</span> ! Pour finaliser votre inscription vous devez valider votre' . + "\r\n" .
-                        'inscription en appuyant sur le bouton suivant :' . + "\r\n" .
-                    '</p>' . + "\r\n" .
-                    '<a class="button" href="' . $verification_url . '">Valider mon inscription</a>' . + "\r\n" .
-                    '<small>' . + "\r\n" .
-                        'Ou en cliquant sur le lien suivant&nbsp;: ' . + "\r\n" .
-                        '<a href="' . $verification_url . '">' . $verification_url . '</a>' . + "\r\n" .
-                    '</small>' . + "\r\n" .
-                    '<p>' . + "\r\n" .
-                        'Si quelque chose d\'innatendu se produit, veuillez' . + "\r\n" .
-                        '<a href="' . SITE_URL . '/contact' . '">nous contacter</a>' . + "\r\n" .
-                        'dans les plus brefs délais.' . + "\r\n" .
-                    '</p>' . + "\r\n" .
-                '</main>' . + "\r\n" .
-                '<footer>L\'équipe de Grapes</footer>' . + "\r\n" .
-            '</body>' .
+            '<!doctype html>' . "\r\n" .
+            '<html lang="fr">' . "\r\n" .
+            '<head>' . "\r\n" .
+                '<meta charset="utf-8">' . "\r\n" .
+                '<meta name="viewport" content="width=device-width, initial-scale=1.0">' . "\r\n" .
+                '<title>Mail de vérification</title>' . "\r\n" .
+            '</head>' . "\r\n" .
+            '<body style="margin:0;font-family:system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Oxygen, Ubuntu, Cantarell, \'Open Sans\', \'Helvetica Neue\', sans-serif;font-size:125%;line-height:1.5;background-color:whitesmoke;">' . "\r\n" .
+                '<div style="margin:auto;padding:4em;background-color:#f8eccf;border-bottom:2px #c2b79f solid;">' . "\r\n" .
+                    '<h1 style="margin:0;line-height:0.8;margin-bottom:0.33em;color:#222;">Mail de vérification</h1>' . "\r\n" .
+                    '<p class="start" style="margin:0;margin-bottom:0.8em;color:#222;">' . "\r\n" .
+                        'Hey <span class="fname" style="font-weight:bold;">' . $fname . '</span> ! Pour finaliser votre inscription vous devez valider votre' . "\r\n" .
+                        'inscription en appuyant sur le bouton suivant :' . "\r\n" .
+                    '</p>' . "\r\n" .
+                    '<a class="button" href="' . $verification_url . '" style="display:block;color:white;width:fit-content;padding:1em 2em;margin:0.5em auto;margin-inline:auto;background-color:#4B755F;outline:4px solid black;text-decoration:none;border-radius:1em;">Valider mon inscription</a>' . "\r\n" .
+                    '<small style="display:block;width:fit-content;margin-bottom:1em;margin-inline:auto;font-style:italic;">' . "\r\n" .
+                        'Ou en cliquant sur le lien suivant&nbsp;: ' . "\r\n" .
+                        '<a href="' . $verification_url . '" style="color:#75A358;text-decoration:1px solid underline;">' . $verification_url . '</a>' . "\r\n" .
+                    '</small>' . "\r\n" .
+                    '<p style="margin:0;color:#222;">' . "\r\n" .
+                        'Si quelque chose d\'innatendu se produit, veuillez' . "\r\n" .
+                        '<a href="' . SITE_URL . '/contact" style="color:#75A358;text-decoration:1px solid underline;">nous contacter</a>' . "\r\n" .
+                        'dans les plus brefs délais.' . "\r\n" .
+                    '</p>' . "\r\n" .
+                '</div>' . "\r\n" .
+                '<footer style="color:#222;bottom:0;text-align:center;padding:2em;font-style:italic;">L\'équipe de Grapes</footer>' . "\r\n" .
+            '</body>' . "\r\n" .
             '</html>';
         $mailer->AltBody = 'Hey ' . $fname . ' ! Pour finaliser votre inscription vous devez valider votre inscription en appuyant sur le lien suivant :' . $verification_url . ".\r\n" .
-            'Si quelque chose d\'innatendu se produit, veuillez nous contacter ici → ' .  SITE_URL . '/contact';
+            'Si quelque chose d\'innatendu se produit, veuillez nous contacter ici → ' . SITE_URL . '/contact';
+
 
         $mailer->send();
-        header('Location /inscription/validation');
+        return true;
     } catch (Exception $err)
     {
-        set_session_error(ErrorTypes::VERIFICATION_MAIL_NOT_SENT);
+        \Safe\error_log($err);
+        return false;
     }
+}
+
+function validate_account(): void
+{
+    $token = urldecode($_GET['token']);
+
+    if (strlen($token) !== 60)
+    {
+        set_session_error(ErrorTypes::WRONG_TOKEN);
+        header('Location: /register');
+        exit;
+    }
+
+    $user = get_user_by_validation_token($token);
+
+    if($user === false)
+    {
+        set_session_error(ErrorTypes::SQL_ERROR);
+        header('Location: /register');
+        exit;
+    }
+
+    if(empty($user))
+    {
+        set_session_error(ErrorTypes::WRONG_TOKEN);
+        header('Location: /register');
+        exit;
+    }
+
+    if (validate_account_by_token($user) === false)
+    {
+        set_session_error(ErrorTypes::SQL_ERROR);
+        header('Location: /register');
+        exit;
+    }
+
+    header('Location: /register/validated');
+    exit;
 }
