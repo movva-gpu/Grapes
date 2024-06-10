@@ -1,27 +1,27 @@
-Version française : /humans.txt
+/* FRENCH VERSION: /humans.txt */
 
 /* TEAM */
-Front-end developer : Hamza Senini
+Front-end developer: Hamza Senini
 
-Web, UX and UI designer : Eglantine Fernandes
+Web, UX and UI designer: Eglantine Fernandes
 
-Graphiste, web and UI designer : Noam Brodeur
+Graphiste, web and UI designer: Noam Brodeur
 
-Back-end developer : Danyella Strikann
+Back-end developer: Danyella Strikann
 
 /* THANKS */
 To all of our teachers.
 
 /* SITE */
-Last update : 06/06/2024
-Language : fr_fr
-Doctype : html
-Standards : HTML5/CSS3, Babel, PHP 8.3
-Frameworks : Vanilla PHP 8.3
-Logiciels : Figma (Design and brainstorming) ;
+Last update: 06/06/2024
+Language: fr_fr
+Doctype: html
+Standards: HTML5/CSS3, Babel, PHP 8.3
+Frameworks: Vanilla PHP 8.3
+Softwares: Figma (Design and brainstorming) ;
             Visual Studio Code (and VSCodium) and PHPStorm (IDE) ;
             Powershell, CMD and Git Bash (shell) ;
             Arc, Chrome and Firefox (browser and debugging) ; Windows (OS) ;
             PHP 8.3's Windows Binaries and Docker (Environment de dev) ;
             GitHub and Git (VCS)
-Source : https://github.com/movva-gpu/Grapes
+Source: https://github.com/movva-gpu/Grapes

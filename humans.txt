@@ -1,4 +1,4 @@
-English version : /humans.en.txt
+/* ENGLISH VERSION : /humans.en.txt */
 
 /* TEAM */
 Développeur front-end : Hamza Senini
