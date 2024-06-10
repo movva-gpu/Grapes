@@ -12,5 +12,6 @@ try
     return $db;
 } catch (PDOException $err)
 {
-    throw $err;
+    \Safe\error_log($err);
+    return false;
 }

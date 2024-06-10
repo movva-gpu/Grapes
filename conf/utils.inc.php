@@ -45,21 +45,52 @@ function getAsset(string $path): string
     $minifiedFilePath = 'dist/' . $minifiedFilename;
 
     if (file_exists(rootPath($minifiedFilePath))) {
-        return $minifiedFilePath;
+        return SITE_URL . '/' . $minifiedFilePath;
     } elseif (file_exists(rootPath($fileDistPath))) {
-        return $fileDistPath;
+        return SITE_URL . '/' . $fileDistPath;
     } elseif (file_exists(rootPath($fileAssetsPath))) {
-        return $fileAssetsPath;
+        return SITE_URL . '/' . $fileAssetsPath;
     }
 
     throw new InvalidArgumentException('Asset ' . $path . ' not found.', 404);
 }
 
-enum ErrorTypesEnum
+function set_session_error(ErrorTypes $error_type, ?string $message = null, bool $close_session = true): bool|null {
+    if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+    if (!!$message) $error = [ 'error' => ['message' => $message, 'type' => $error_type] ];
+    else $error = ['error' => ['type' => $error_type]];
+
+    $_SESSION['error'] = $error;
+    if ($close_session) return session_write_close();
+
+    return null;
+}
+
+function get_users_by_email(PDO $db, string $email): array|false
 {
-    case MissingField;
-    case TooLongField;
-    case RepeatPasswordNotEqual;
-    case BadEmailFormat;
-    case EmailDoesNotExist;
+    try
+    {
+        $email = $db->quote($email);
+
+        $stmt = $db->prepare('SELECT * FROM users WHERE user_email = :email');
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $err)
+    {
+        \Safe\error_log($err);
+        return false;
+    }
+}
+
+enum ErrorTypes
+{
+    case MISSING_FIELD;
+    case FIELD_TOO_LONG;
+    case REPEATED_PASSWORD_NOT_EQUALS;
+    case BAD_EMAIL_FORMAT;
+    case EMAIL_DOES_NOT_EXIST;
+    case SQL_ERROR;
+    case ACCOUNT_WITH_EMAIL_ALREADY_EXISTS;
+    case VERIFICATION_MAIL_NOT_SENT;
 }

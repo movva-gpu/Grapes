@@ -30,9 +30,9 @@ unset($_SESSION['error']);
             <div class="error">
                     Erreur : <?= (function($error)
                     {
-                        switch ($error['error']['code'])
+                        switch ($error['error']['type'])
                         {
-                            case ErrorTypesEnum::MissingField:
+                            case ErrorTypes::MISSING_FIELD:
                                 $field = $error['error']['message'];
                                 switch ($field)
                                 {
@@ -51,7 +51,7 @@ unset($_SESSION['error']);
                                 }
                                 $toReturn = 'Le champ "' . $field_name . '"  est obligatoire.';
                                 break;
-                            case ErrorTypesEnum::TooLongField:
+                            case ErrorTypes::FIELD_TOO_LONG:
                                 $field = $error['error']['message'];
                                 switch ($field)
                                 {
@@ -70,14 +70,17 @@ unset($_SESSION['error']);
                                 }
                                 $toReturn = 'Le champ "' . $field_name . '"  est trop long.';
                                 break;
-                            case ErrorTypesEnum::BadEmailFormat:
+                            case ErrorTypes::BAD_EMAIL_FORMAT:
                                 $toReturn = 'Votre adresse e-mail est invalide.';
                                 break;
-                            case ErrorTypesEnum::EmailDoesNotExist:
+                            case ErrorTypes::EMAIL_DOES_NOT_EXIST:
                                 $toReturn = 'L\'adresse e-mail spécifiée n\'existe pas.';
                                 break;
-                            case ErrorTypesEnum::RepeatPasswordNotEqual:
+                            case ErrorTypes::REPEATED_PASSWORD_NOT_EQUALS:
                                 $toReturn = 'Les mots de passes spécifiés ne sont pas identiques.';
+                                break;
+                            case ErrorTypes::ACCOUNT_WITH_EMAIL_ALREADY_EXISTS:
+                                $toReturn = 'Un compte avec cette adresse e-mail existe déjà. Vouliez-vous vous <a href="/connexion">connecter</a> ?';
                                 break;
                             default:
                                 $toReturn = 'Une erreur s\'est produite, veuillez réessayer.';
