@@ -33,6 +33,7 @@ jobs:
           git checkout main
           git add .
           git commit -m 'chore(minify): :package: minify CSS and JS files'
+          git pull --rebase origin main
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
