@@ -19,8 +19,8 @@ jobs:
               run: |
                 CURRENT_DATE=$(date +'%d/%m/%Y - %H:%M:%S')
                 echo $(pwd)
-                sed -i "s/^Dernière MàJ : .*/Dernière MàJ : \$CURRENT_DATE/" '../../humans.txt'
-                sed -i "s/^Last Updated: .*/Last Updated: \$CURRENT_DATE/" '../../humans.en.txt'
+                sed -i "s/^Dernière MàJ : .*/Dernière MàJ : \$CURRENT_DATE/" 'humans.txt'
+                sed -i "s/^Last Updated: .*/Last Updated: \$CURRENT_DATE/" 'humans.en.txt'
 
             - name: Git commit and push
               run: |
