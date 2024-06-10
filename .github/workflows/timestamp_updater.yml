@@ -2,7 +2,7 @@ name: Update humans.txt
 
 on:
     push:
-        branches: ['main', 'feature/timestamp-updater']
+        branches: ['main']
 
 jobs:
     build:
