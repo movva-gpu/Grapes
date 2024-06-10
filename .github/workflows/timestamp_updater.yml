@@ -25,6 +25,7 @@ jobs:
               run: |
                   git add .
                   git commit -m 'chore(docs): :package: updating timestamp of humans.txt files'
+                  git pull --rebase origin main
                   git push
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
