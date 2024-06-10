@@ -17,8 +17,8 @@ jobs:
 
             - name: Update timestamp of humans.txt files
               run: |
-                  sed -i 's/^Dernière MàJ : .*/Dernière MàJ : $(date +'%d/%m/%Y - %H:%M:%S')/' '../humans.txt'
-                  sed -i "s/^Last Updated: .*/Last Updated: $(date +'%d/%m/%Y - %H:%M:%S')/' '../humans.en.txt'
+                  sed -i "s/^Dernière MàJ : .*/Dernière MàJ : $(date +'%d/%m/%Y - %H:%M:%S')/" '../humans.txt'
+                  sed -i "s/^Last Updated: .*/Last Updated: $(date +'%d/%m/%Y - %H:%M:%S')/" '../humans.en.txt'
 
             - name: Git commit and push
               run: |
