@@ -7,7 +7,7 @@
     <link rel="author" href="/humans.en.txt">
     <title>Erreur 404</title>
 
-    <link rel="stylesheet" href="<?= getAsset('css/styles.css') ?>">
+    <link rel="stylesheet" href="<?= assets_path('css/styles.css') ?>">
 </head>
 <body>
     <h1>Erreur 404</h1>

@@ -12,7 +12,7 @@ function index(): void
     $view_name = 'Register';
     $page_title = 'Inscription';
 
-    require viewsPath('templates/Main_template.php');
+    require views_path('templates/Main_template.php');
 }
 
 function validate(): void
@@ -98,7 +98,7 @@ function validate(): void
     }
 
     /** @var PDO $db */
-    $db = include rootPath('conf/db.inc.php');
+    $db = db_connect();
 
     if (!$db)
     {
@@ -107,7 +107,7 @@ function validate(): void
         exit;
     }
 
-    $users_with_same_email = get_users_by_email($db, $email);
+    $users_with_same_email = get_users_by_email($email, $db);
 
     if ($users_with_same_email === false)
     {
@@ -142,9 +142,11 @@ function validate(): void
         $stmt->bindParam(':lname', $name);
         $stmt->bindParam(':fname', $fname);
 
-        if ($nick === null) {
+        if ($nick === null)
+        {
             $stmt->bindParam(':nick', $nick, PDO::PARAM_NULL);
-        } else {
+        } else
+        {
             $stmt->bindParam(':nick', $nick);
         }
 
@@ -225,7 +227,8 @@ function send_verification_mail(PHPMailer $mailer, string $email, string $fname,
 
         $mailer->send();
         header('Location /inscription/validation');
-    } catch (Exception $err) {
+    } catch (Exception $err)
+    {
         set_session_error(ErrorTypes::VERIFICATION_MAIL_NOT_SENT);
     }
 }
