@@ -9,6 +9,12 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 function index(): void
 {
+    if (isset($_SESSION['user_id']))
+    {
+        header('Location: /profile/about');
+        exit;
+    }
+
     $view_name = 'Register';
     $page_title = 'Inscription';
 
@@ -17,19 +23,31 @@ function index(): void
 
 function validate(): void
 {
+    if (isset($_SESSION['user_id']))
+    {
+        header('Location: /profile/about');
+        exit;
+    }
+
     if (!isset($_GET['token']))
     {
-        validate_registration();
+        validate_registration(true);
         return;
     } else
     {
-        validate_account();
+        validate_account(true);
         return;
     }
 }
 
-function validate_registration(): void
+function validate_registration(bool $from_inside = false): void
 {
+    if ($from_inside === false)
+    {
+        header('Location: /inscription');
+        exit;
+    }
+
     session_start();
 
     $EXPECTED_FIELDS = [
@@ -136,7 +154,7 @@ function validate_registration(): void
         exit;
     }
 
-    $token = urlencode(bin2hex(random_bytes(30)));
+    $token = bin2hex(random_bytes(30));
 
     try
     {
@@ -194,6 +212,8 @@ function validate_registration(): void
     set_session_error(ErrorTypes::VERIFICATION_MAIL_NOT_SENT);
     users_by_email($email, action: DBActions::DELETE);
     header('Location: /inscription');
+    
+    \Safe\session_abort();
     exit;
 }
 
@@ -263,8 +283,14 @@ function send_verification_mail(PHPMailer $mailer, string $email, string $fname,
     }
 }
 
-function validate_account(): void
+function validate_account(bool $from_inside = false): void
 {
+    if ($from_inside === false)
+    {
+        header('Location: /inscription');
+        exit;
+    }
+
     $token = urldecode($_GET['token']);
 
     if (strlen($token) !== 60)

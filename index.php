@@ -17,5 +17,3 @@ require_once root_path('conf/config.inc.php');
 include root_path('vendor/autoload.php');
 
 require_once root_path('conf/router.inc.php');
-
-echo array_key_exists('error', $_SESSION);

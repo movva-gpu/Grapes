@@ -55,12 +55,38 @@ function user_by_id(int $id, ?PDO $db = null, DBActions $action = DBActions::SEL
         if ($action === DBActions::SELECT)
         {
             $stmt = $db->prepare('SELECT * FROM `users` WHERE user_id = :id');
-            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } elseif ($action === DBActions::DELETE) {
             $stmt = $db->prepare('DELETE FROM `users` WHERE user_id = :id');
-            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
+        }
+    } catch (PDOException $err)
+    {
+        \Safe\error_log($err);
+        return false;
+    }
+}
+
+function user_by_nickname_or_mail(string $email_or_nickname, ?PDO $db = null, DBActions $action = DBActions::SELECT): array|bool
+{
+    if (is_null($db)) $db = db_connect();
+    if ($db === false) return false;
+
+    try
+    {
+        if ($action === DBActions::SELECT)
+        {
+            $stmt = $db->prepare('SELECT * FROM `users` WHERE user_email = :email_or_nick OR user_nickname = :email_or_nick');
+            $stmt->bindParam(':email_or_nick', $email_or_nickname, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } elseif ($action === DBActions::DELETE) {
+            $stmt = $db->prepare('DELETE FROM `users` WHERE user_email = :email_or_nick OR user_nickname = :email_or_nick');
+            $stmt->bindParam(':email_or_nick', $email_or_nickname, PDO::PARAM_STR);
             $stmt->execute();
             return true;
         }

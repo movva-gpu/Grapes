@@ -7,7 +7,7 @@ a[aria-current='page'] {
   background-color: red;
 }
 
-input {
+input, button, select {
     font: inherit;
     line-height: inherit;
     letter-spacing: inherit;

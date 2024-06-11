@@ -1,10 +1,8 @@
 <?php
 $page_title = ($page_title ?? 'Document sans titre') . ' - ' . APP_NAME;
-print_r($_SESSION);
-
 session_start();
 
-print_r($_SESSION);
+print_r($_SESSION['error']);
 $error = $_SESSION['error'] ?? '';
 unset($_SESSION['error']);
 ?>
