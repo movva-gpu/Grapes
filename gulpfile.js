@@ -13,6 +13,11 @@ import postcssNested from 'postcss-nested';
 
 const postcss_plugins = [postcssNested(), autoprefixer(), cssnano()];
 
+const minified_header = '/** minified with gulp.js\r\n' +
+                        ' * at: ' + new Date(Date.now()).toISOString() + '\r\n' + 
+                        ' * all rights reserved.\r\n' +
+                        ' */';
+
 task('clean', cb => {
     fs.accessSync('.');
     if (!fs.existsSync('./dist')) cb();
@@ -29,7 +34,7 @@ task('clean', cb => {
 task('minifyCSS', () => {
     return src('./assets/css/**/*.css')
         .pipe(postcss(postcss_plugins))
-        .pipe(header('/* minified with gulp.js\r\n' + ' * all rights reserved.\r\n' + ' */'))
+        .pipe(header(minified_header))
         .pipe(rename({ extname: '.min.css' }))
         .pipe(dest('./dist/css'));
 });
@@ -38,7 +43,7 @@ task('minifyJS', () => {
     return src('./assets/js/**/*.js')
         .pipe(babel())
         .pipe(uglify())
-        .pipe(header('/* minified with gulp.js\r\n' + ' * all rights reserved.\r\n' + ' */'))
+        .pipe(header(minified_header))
         .pipe(rename({ extname: '.min.js' }))
         .pipe(dest('./dist/js'));
 });

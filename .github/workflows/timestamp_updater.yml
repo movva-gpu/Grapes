@@ -1,0 +1,31 @@
+name: Update humans.txt
+
+on:
+    push:
+        branches: ['main']
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Git setup
+              run: |
+                  git config --global user.name 'github-actions[bot]'
+                  git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+            - name: Update timestamp of humans.txt files
+              run: |
+                sed -i "s/^Dernière MàJ : .*/Dernière MàJ : $(date +'%d\/%m\/%Y - %H:%M:%S')/" humans.txt
+                sed -i "s/^Last update: .*/Last update: $(date +'%d\/%m\/%Y - %H:%M:%S')/" humans.en.txt
+
+
+            - name: Git commit and push
+              run: |
+                  git add .
+                  git commit -m 'chore(docs): :package: updating timestamp of humans.txt files'
+                  git pull --rebase origin main
+                  git push
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
