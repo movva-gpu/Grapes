@@ -13,7 +13,7 @@ Back-end developer: Danyella Strikann
 To all of our teachers.
 
 /* SITE */
-Last update: 13/06/2024 - 15:26:22
+Last update: 13/06/2024 - 15:36:53
 Language: fr_fr
 Doctype: html
 Standards: HTML5/CSS3, Babel, PHP 8.3
