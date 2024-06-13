@@ -22,6 +22,7 @@
     "win:workers": "powershell -File ./scripts/workers.ps1",
     "uni:workers": "sh ./scripts/workers.sh",
     "mysql": "mysqld",
+    "adminsql": "cd adminsql; php -S localhost:8080",
     "gulp": "gulp",
     "phpmyadmin": "php -S localhost:8080 adminsql/",
     "win:install:phpmyadmin": "Invoke-WebRequest -Uri https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.zip -OutFile .\\tmp.zip; Expand-Archive -Path .\\tmp.zip -DestinationPath .\\adminsql -Force; Rename-Item .\\adminsql\\* tmp; Move-Item .\\adminsql\\*\\* .\\adminsql\\; Remove-Item .\\tmp.zip; Remove-Item .\\adminsql\\tmp",

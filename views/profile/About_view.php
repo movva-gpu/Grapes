@@ -56,7 +56,7 @@ if ($user['user_display_name'] === DisplayName::NICKNAME->value && !is_null($use
 $bio_small = '\'bio-small\'';
 
 $display_checkbox_attribute = $nickname ? 'checked' : '';
-$img_path = assets_path('pfp/' . $user['user_profile_picture_filename'] . '_256px.avif');
+$img_path = assets_path('pfp/' . $user['user_profile_picture_filename'] . '_256px.avif', true);
 
 $image_input_onchange = \JShrink\Minifier::minify(<<<JS
 
@@ -271,7 +271,7 @@ JS); ?></script>
 
 <div class="profile">
     <a class="pfp-link" href="<?= SITE_URL ?>/profil/edition">
-        <img width="256" height="256" class="pfp" src="<?= assets_path('pfp/' . $user['user_profile_picture_filename'] . '_256px.avif') ?>">
+        <img width="256" height="256" class="pfp" src="<?= assets_path('pfp/' . $user['user_profile_picture_filename'] . '_256px.avif', true) ?>">
         <span class="tooltip">Changer d'avatar</span>
     </a>
     <h1 class="whoami">

@@ -71,6 +71,31 @@ function user_by_id(int $id, ?PDO $db = null, DBActions $action = DBActions::SEL
     }
 }
 
+function gardens_by_user_id(int $id, ?PDO $db = null, DBActions $action = DBActions::SELECT): array|bool
+{
+    if (is_null($db)) $db = db_connect();
+    if ($db === false) return false;
+
+    try
+    {
+        if ($action === DBActions::SELECT)
+        {
+            $stmt = $db->prepare('SELECT * FROM `gardens` WHERE _user_id = :id');
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } elseif ($action === DBActions::DELETE) {
+            $stmt = $db->prepare('DELETE FROM `gardens` WHERE _user_id = :id');
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
+        }
+    } catch (PDOException $err)
+    {
+        \Safe\error_log($err);
+        return false;
+    }
+}
 
 function user_by_uuid(string $uuid, ?PDO $db = null, DBActions $action = DBActions::SELECT): array|bool
 {

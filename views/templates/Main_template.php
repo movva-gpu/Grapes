@@ -17,6 +17,7 @@ unset($_SESSION['error']);
     <title><?= $page_title ?></title>
     <link rel="author" href="/humans.txt">
     <link rel="author" href="/humans.en.txt">
+    <?= $head ?>
     <link rel="stylesheet" href="<?= assets_path('css/styles.css') ?>">
     <script src="<?= assets_path('js/main.js') ?>" defer></script>
 </head>

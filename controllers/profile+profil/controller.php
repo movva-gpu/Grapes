@@ -2,7 +2,8 @@
 
 function index(): void
 {
-    return;
+    header('Location: /profile/about');
+    exit;
 }
 
 function apropos(): void
@@ -60,28 +61,47 @@ function edit(): void
     $queue_file = \Safe\file_get_contents($queue_path);
     $queue      = explode(PHP_EOL, $queue_file);
 
-    print_r($_POST);
-    print_r($_FILES);
-    print_r($_FILES['error']);
-
     if (!empty($_FILES))
     {
         $tmp_path  = $_FILES['pfp']['tmp_name'];
         $path_info = pathinfo($_FILES['pfp']['name']);
 
-        $new_file_name = root_path('assets/uploads/' . $path_info['filename'] . '_' . \Safe\date('Ymd_Gis') . '.' . $path_info['extension']);
+        $new_file_name    = 'pfp' . '_' . \Safe\date('Ymd_Gis') . '.' . $path_info['extension'];
+        $new_file_name_db = 'pfp' . '_' . \Safe\date('Ymd_Gis');
+        $new_file_path    = root_path('assets/uploads/' . $new_file_name);
 
-        if (move_uploaded_file($tmp_path, $new_file_name))
+        if (move_uploaded_file($tmp_path, $new_file_path))
         {
-    
+            $queue[] = $new_file_path;
 
-            $queue[] = $new_file_name;
+            $db = db_connect();
+            $stmt = $db->prepare('UPDATE `users` SET `user_profile_picture_filename` = :pfp_path WHERE `users`.`user_id` = :id');
+            $stmt->bindParam(':pfp_path', $new_file_name_db);
+            $stmt->bindParam(':id', $user['user_id'], PDO::PARAM_INT);
+
+            try
+            {
+                $stmt->execute();
+            } catch (PDOException $e)
+            {
+                \Safe\error_log('Something went wrong with SQL:' . "\r\n" . $e);
+                set_session_error(ErrorTypes::SQL_ERROR);
+                header('Location: /profile/about');
+                exit;
+            }
+
             \Safe\file_put_contents($queue_path, implode(PHP_EOL, $queue));
 
+            foreach (\Safe\glob(root_path('assets/pfp/' . $user['user_profile_picture_filename'] . '*')) as $file) {
+                \Safe\unlink($file);
+            }
+
             echo '👍';
+            header('Location: /profile/about');
         } else
         {
             echo '👎';
+            header('Location: /profile/about');
         }
     }
 }

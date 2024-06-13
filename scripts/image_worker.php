@@ -19,7 +19,7 @@ while (true)
         $queue = \Safe\file($queue_file, FILE_IGNORE_NEW_LINES);
         $queue = array_filter($queue, function(?string $line)
         {
-            return !is_null($line);
+            return !is_null($line) && !empty($line);
         });
         if (!empty($queue))
         {
@@ -46,7 +46,17 @@ while (true)
                 }
             }
         } else {
-            echo timestamp() . "empty file, waiting 5 seconds...\r\n";
+            $uploads_dir = \Safe\glob(root_path('assets/uploads/*'));
+            if (!empty($uploads_dir))
+            {
+                echo timestamp() . "cleaning uploads...\r\n";
+                foreach ($uploads_dir as $key => $value) {
+                    \Safe\unlink($value);
+                }
+            } else
+            {
+                echo timestamp() . "empty file, waiting 5 seconds...\r\n";
+            }
         }
     }
     sleep(5);
@@ -64,8 +74,11 @@ function compress_image_to_avif(string $file_path): bool
         $out        = null;
         $return_var = null;
         $command    = 'magick ' . $file_path .
-            ' -resize ' . $res . 'x' . $res .
+            ' -resize ' . 'x' . $res .
+            ' -quality 65' . ' -gravity Center -crop ' . $res . 'x' . $res .
             ' ' . $output_file;
+
+        echo $command;
         
         \Safe\exec($command, $out, $return_var);
 

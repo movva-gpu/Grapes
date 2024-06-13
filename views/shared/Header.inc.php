@@ -18,7 +18,7 @@ function is_current_page(string $pageName): bool
     <nav style="display:flex; justify-content: space-between">
         <div class="left">
             <a href="/" <?= is_current_page('home') ? 'aria-current="page"' : '' ?>>Accueil</a>
-            <a href="#" <?= is_current_page('garden')
+            <a href="/jardins" <?= is_current_page('garden')
                 ? 'aria-current="page"'
                 : '' ?>>Jardin potager</a>
             <a href="#" <?= is_current_page('contact') ? 'aria-current="page"' : '' ?>>Contact</a>
@@ -38,7 +38,7 @@ function is_current_page(string $pageName): bool
     <nav style="display:flex; justify-content: space-between">
         <div class="left">
             <a href="/" <?= is_current_page('home') ? 'aria-current="page"' : '' ?>>Accueil</a>
-            <a href="#" <?= is_current_page('garden')
+            <a href="/jardins" <?= is_current_page('garden')
                 ? 'aria-current="page"'
                 : '' ?>>Jardin potager</a>
             <a href="#" <?= is_current_page('contact') ? 'aria-current="page"' : '' ?>>Contact</a>

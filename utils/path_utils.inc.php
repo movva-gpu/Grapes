@@ -33,7 +33,7 @@ function views_path(string $path): string
  * (if it exists). Else, if it exists in dist/, then it outputs, else, it will take the one in the
  * assets/ directory.
  */
-function assets_path(string $path): string
+function assets_path(string $path, ?bool $is_pfp = false): string
 {
     $file_assets_path = 'assets/' . $path;
 
@@ -55,7 +55,16 @@ function assets_path(string $path): string
         return SITE_URL . '/' . $file_assets_path;
     }
 
-    throw new InvalidArgumentException('Asset ' . $path . ' not found.', 404);
+    error_log($is_pfp ? 'AA': 'BB');
+
+    if (!$is_pfp)
+    {
+        throw new InvalidArgumentException('Asset ' . $path . ' not found.', 404);
+    }
+
+    $size = explode('_', $path);
+    $size_str = $size[array_key_last($size)];
+    return assets_path('pfp/000_' . $size_str);
 }
 
 /**
