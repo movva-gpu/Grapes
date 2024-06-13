@@ -1,7 +1,11 @@
 {
   "cSpell.language": "en,fr",
   "cSpell.words": [
+    "'innatendu",
+    "adminsql",
     "cssnano",
+    "d",
+    "Danyella",
     "'innatendu",
     "Danyella",
     "d",
@@ -9,10 +13,19 @@
     "egulias",
     "Egulias",
     "Fernandes",
+    "fontawesome",
+    "magick",
+    "mariadb",
+    "mysqld",
     "ONLYDIR",
+    "phpmyadmin",
+    "pwsh",
     "Senini",
     "Strikann",
     "thecodingmachine",
+    "troyes",
+    "uglifyjs",
+    "zypper",
     "troyes"
   ],
   "conventionalCommits.scopes": ["build", "formatting", "backend", "github"]

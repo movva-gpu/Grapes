@@ -1,11 +1,5 @@
 {
   "name": "ws202",
-  "type": "module",
-  "scripts": {
-    "dev": "php -S localhost:3333",
-    "format": "prettier . --write",
-    "gulp": "gulp"
-  },
   "devDependencies": {
     "@prettier/plugin-php": "^0.22.2",
     "autoprefixer": "^10.4.19",
@@ -19,7 +13,22 @@
     "gulp-uglify": "^3.0.2",
     "postcss": "^8.4.38",
     "postcss-nested": "^6.0.1",
-    "prettier": "^3.3.0",
-    "uglify": "^0.1.5"
-  }
+    "prettier": "^3.3.2"
+  },
+  "scripts": {
+    "win:dev": "bun win:workers; bun php",
+    "php": "php -S localhost:3333",
+    "format": "prettier . --write",
+    "win:workers": "powershell -File ./scripts/workers.ps1",
+    "uni:workers": "sh ./scripts/workers.sh",
+    "mysql": "mysqld",
+    "adminsql": "cd adminsql; php -S localhost:8080",
+    "gulp": "gulp",
+    "phpmyadmin": "php -S localhost:8080 adminsql/",
+    "win:install:phpmyadmin": "Invoke-WebRequest -Uri https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.zip -OutFile .\\tmp.zip; Expand-Archive -Path .\\tmp.zip -DestinationPath .\\adminsql -Force; Rename-Item .\\adminsql\\* tmp; Move-Item .\\adminsql\\*\\* .\\adminsql\\; Remove-Item .\\tmp.zip; Remove-Item .\\adminsql\\tmp",
+    "win:install:mariadb": "",
+    "apt:install": "apt update; apt install php8.3 composer mariadb nodejs20 npm20",
+    "zypper:install": "zypper in php8 composer mariadb nodejs npm"
+  },
+  "type": "module"
 }

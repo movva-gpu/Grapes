@@ -1,9 +1,8 @@
 <?php
 
-function index() : void
+function index(): void
 {
     $page_title = 'Accueil';
     $view_name = 'Home';
-
-    require_once viewsPath('templates/Main_template.php');
+    require views_path('templates/Main_template.php');
 }
