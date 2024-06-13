@@ -78,4 +78,9 @@ enum ErrorTypes
      * To use when the specified password doesn't math the corresponding user.
      */
     case WRONG_PASSWORD;
+
+    /**
+     *  To use when an action is performed without being logged in.
+     */
+    case NOT_LOGGED_IN;
 }

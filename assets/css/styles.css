@@ -1,15 +1,212 @@
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 105%;
+}
+
+* {
+    margin: 0;
 }
 
 a[aria-current='page'] {
   background-color: red;
 }
 
-input, button, select {
+input, button, select, textarea {
     font: inherit;
     line-height: inherit;
     letter-spacing: inherit;
     color: inherit;
+}
+
+button, select {
+    cursor: pointer;
+}
+
+main {
+    margin: 2em 2em 0;
+}
+
+.profile {
+    max-width: 256px;
+    margin-inline: auto;
+}
+
+.pfp-link {
+    display: block;
+    position: relative;
+    width: fit-content;
+
+    & .tooltip {
+        position: absolute;
+        bottom: -3em;
+        opacity: 0;
+        color: whitesmoke;
+        background-color: #111b;
+        padding: 0.33em 0.5em;
+        border: #fff5 2px solid;
+        border-radius: 0.33em;
+        left: 50%;
+        translate: -50% 0;
+        transition: bottom ease 888ms, opacity 888ms;
+        pointer-events: none;
+        backdrop-filter: blur(8px);
+        width: max-content;
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 1000;
+    }
+
+    &:hover .tooltip {
+        bottom: -1.5em;
+        opacity: 1;
+        pointer-events: all;
+        transition: bottom ease 444ms, opacity 444ms;
+
+        &:hover {
+           background-color: #111f;
+        }
+    }
+}
+
+.pfp {
+    border-radius: 100vw;
+    border: 1px grey solid;
+}
+
+.whoami {
+    position: relative;
+    width: fit-content;
+    padding-right: 0.5em;
+    font-size: 1.5em;
+
+    & span {
+        display: block;
+    }
+    & .second-line {
+        font-weight: 300;
+        font-style: italic;
+        color: dimgray;
+        font-size: 0.8em;
+    }
+}
+ 
+.edit {
+    position: absolute;
+    top: 0;
+    right: -24px;
+    background: none;
+    border: none;
+
+    opacity: 0.7;
+    transition: 444ms opacity;
+
+    &:hover {
+        opacity: 1;
+        transition: 200ms opacity;
+    }
+}
+
+.label-input-wp {
+    display: flex;
+    flex-direction: column;
+    gap: 0.33em;
+    margin-bottom: 0.67em;
+
+    &:has(input[type="checkbox"]) {
+        flex-direction: row-reverse;
+    }
+}
+
+#biography {
+    resize: vertical;
+    min-height: 3em;
+    min-height: 3lh;
+    max-height: 6em;
+    max-height: 6lh;
+}
+
+#pfp-image {
+    display: block;
+    position: relative;
+    background-size: cover;
+    z-index: 1;
+    background-position: center;
+    height: 256px;
+    width: 256px;
+    border-radius: 1000vw;
+    border: 1px grey solid;
+}
+
+.cancel-input-wp {
+    position: relative;
+
+    & input, & textarea {
+        display: block;
+        width: calc(100% - 0.8em * 2);
+    }
+}
+
+.back {
+    position: absolute;
+    background: none;
+    border: none;
+    transition: rotate ease 444ms, opacity 444ms;
+    line-height: 0;
+    top: 0.66em;
+    right: 0.8em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    width: 16px;
+    aspect-ratio: 1;
+
+    & svg {
+        transition: inherit;
+        opacity: 0.7;
+    }
+
+    &:hover {
+        transition: rotate ease 200ms, opacity 200ms;
+        & svg {
+            opacity: 1;
+            rotate: 15deg;
+        }
+    }
+
+    #pfp-image & {
+        top: unset;
+        right: 1.33em;
+        bottom: 1.33em;
+        padding: 0.33em;
+        border-radius: 1000vw;
+        background-color: dimgray;
+        width: unset;
+        min-width: 16px;
+        border: 6px white solid;
+
+        & svg {
+            fill: white;
+        }
+    }
+}
+
+input:is([type="text"]), textarea, select, button:not(.back, .edit) {
+    padding: 0.33em 0.8em;
+    border-radius: 0.8em;
+    width: calc(100% - 0.8em * 2);
+}
+
+input, textarea, select, button:not(.back, .edit) {
+    border: 2px black solid;
+}
+
+input:is([type="text"]), select, button:not(.back, .edit) {
+    border-radius: 1000vw;
+    line-height: 1;
+}
+
+.btn-wp {
+    padding-top: 0.33em;
+    display: flex;
+    gap: 0.33em;
 }

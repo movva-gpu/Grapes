@@ -3,3 +3,4 @@ node_modules/
 .idea
 conf/config.inc.php
 adminsql/
+queue.txt

@@ -71,6 +71,33 @@ function user_by_id(int $id, ?PDO $db = null, DBActions $action = DBActions::SEL
     }
 }
 
+
+function user_by_uuid(string $uuid, ?PDO $db = null, DBActions $action = DBActions::SELECT): array|bool
+{
+    if (is_null($db)) $db = db_connect();
+    if ($db === false) return false;
+
+    try
+    {
+        if ($action === DBActions::SELECT)
+        {
+            $stmt = $db->prepare('SELECT * FROM `users` WHERE user_uuid = :uuid');
+            $stmt->bindParam(':uuid', $uuid, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } elseif ($action === DBActions::DELETE) {
+            $stmt = $db->prepare('DELETE FROM `users` WHERE user_uuid = :uuid');
+            $stmt->bindParam(':uuid', $uuid, PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
+        }
+    } catch (PDOException $err)
+    {
+        \Safe\error_log($err);
+        return false;
+    }
+}
+
 function user_by_nickname_or_mail(string $email_or_nickname, ?PDO $db = null, DBActions $action = DBActions::SELECT): array|bool
 {
     if (is_null($db)) $db = db_connect();
@@ -137,7 +164,37 @@ function validate_account_by_token(mixed $user, ?PDO $db = null): bool
     }
 }
 
-enum DBActions {
-    case SELECT;
+function encrypt(string $unencrypted_value): string
+{
+    $iv     = openssl_random_pseudo_bytes(openssl_cipher_iv_length(OPENSSL_METHOD));
+    return base64_encode(
+        openssl_encrypt($unencrypted_value, OPENSSL_METHOD, OPENSSL_SECRET, iv: $iv) .
+        '::' .
+        $iv
+    );
+}
+
+function decrypt(string $encrypted_value): string {
+    list($encrypted_data, $iv) = explode('::', \Safe\base64_decode($encrypted_value), 2);
+    return \Safe\openssl_decrypt($encrypted_data, OPENSSL_METHOD, OPENSSL_SECRET, iv: $iv);
+}
+
+enum DBActions
+{
     case DELETE;
+    case SELECT;
+}
+
+enum DisplayName: int
+{
+    case REAL_NAME = 0;
+    case NICKNAME  = 1;
+}
+
+enum UserGender: string
+{
+    case FEMALE       = 'f';
+    case MALE         = 'm';
+    case NON_BINARY   = 'nb';
+    case NOT_PRECISED = 'no';
 }
