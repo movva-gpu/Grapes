@@ -21,7 +21,6 @@ unset($user_no_entities['user_last_updated_at']);
 
 if ($user['user_display_name'] === DisplayName::NICKNAME->value && !is_null($user['user_nickname']))
 {
-    $nickname = true;
     $display_name = $user['user_nickname'];
     if (!is_null($user['user_pronouns']))
     {
@@ -55,7 +54,7 @@ if ($user['user_display_name'] === DisplayName::NICKNAME->value && !is_null($use
 
 $bio_small = '\'bio-small\'';
 
-$display_checkbox_attribute = $nickname ? 'checked' : '';
+$display_checkbox_attribute = $user['user_display_name'] === DisplayName::NICKNAME->value ? 'checked' : '';
 $img_path = assets_path('pfp/' . $user['user_profile_picture_filename'] . '_256px.avif', true);
 
 $image_input_onchange = \JShrink\Minifier::minify(<<<JS
@@ -107,8 +106,8 @@ $profile_form = <<<HTML
                 type="text"
                 name="first-name" id="first-name"
                 value="{$user['user_first_name']}"
-                oninput="onInput(this, event, 40, 60, `first-name-small`)"
-                maxlength="60"
+                oninput="onInput(this, event, 40, 50, `first-name-small`)"
+                maxlength="50"
             >
             <button type="button" onclick="revert(this, event)" data-for="first-name" class="back">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16">
@@ -127,8 +126,8 @@ $profile_form = <<<HTML
                 type="text"
                 name="last-name" id="last-name"
                 value="{$user['user_last_name']}"
-                oninput="onInput(this, event, 40, 60, `last-name-small`)"
-                maxlength="60"
+                oninput="onInput(this, event, 40, 50, `last-name-small`)"
+                maxlength="50"
             >
             <button type="button" onclick="revert(this, event)" data-for="last-name" class="back">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16">
@@ -270,7 +269,7 @@ const revert = (btn, e) => {
 JS); ?></script>
 
 <div class="profile">
-    <a class="pfp-link" href="<?= SITE_URL ?>/profil/edition">
+    <a class="pfp-link" href="javascript:void(0);" onclick="editMode()">
         <img width="256" height="256" class="pfp" src="<?= assets_path('pfp/' . $user['user_profile_picture_filename'] . '_256px.avif', true) ?>">
         <span class="tooltip">Changer d'avatar</span>
     </a>
@@ -280,7 +279,7 @@ JS); ?></script>
             <span class="second-line"><?= $second_line ?? 'vide' ?></span>
         <?php endif ?>
         <button
-            href="<?= SITE_URL ?>/profil/edition"
+            href="javascript:void(0);"
             class="edit"
             onclick="editMode()"
         >

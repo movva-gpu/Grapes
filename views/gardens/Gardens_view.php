@@ -163,9 +163,7 @@ $other_markers_js = (function (array $garden_user_ids) use ($months) {
 <?php if(empty($GLOBALS['gardens'])): ?>
     <h2>Il n'y a rien pour le moment...</h2>
     <p>Mais vous pouvez ajouter un jardin <a href="/gardens/add">ici</a> !</p>
-<?php else:
-    $scripts[] = assets_path('libs/ol.min.js');
-?>
+<?php else: ?>
 
 <h2>Carte</h2>
 

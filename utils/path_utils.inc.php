@@ -64,7 +64,7 @@ function assets_path(string $path, ?bool $is_pfp = false): string
 
     $size = explode('_', $path);
     $size_str = $size[array_key_last($size)];
-    return assets_path('pfp/000_' . $size_str);
+    return assets_path('pfp/001_' . $size_str);
 }
 
 /**
