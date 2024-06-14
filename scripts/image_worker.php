@@ -64,7 +64,7 @@ while (true)
 
 function compress_image_to_avif(string $file_path): bool
 {
-    $resolutions = [64, 92, 128, 256, 1024];
+    $resolutions = [24, 64, 92, 128, 256, 1024];
     $file_info = pathinfo($file_path);
 
     foreach ($resolutions as $res)
@@ -75,7 +75,7 @@ function compress_image_to_avif(string $file_path): bool
         $return_var = null;
         $command    = 'magick ' . $file_path .
             ' -resize ' . 'x' . $res .
-            ' -quality 65' . ' -gravity Center -crop ' . $res . 'x' . $res .
+            ' -quality 95' . ' -gravity Center -crop ' . $res . 'x' . $res .
             ' ' . $output_file;
 
         echo $command;
