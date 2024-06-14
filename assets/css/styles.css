@@ -1,5 +1,14 @@
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1;
+}
+
+.leaflet-popup-content * {
+    margin: 0;
 }
 
 * {
@@ -209,4 +218,50 @@ input:is([type="text"]), select, button:not(.back, .edit) {
     padding-top: 0.33em;
     display: flex;
     gap: 0.33em;
+}
+
+.map-wp {
+    position: relative;
+
+    img.leaflet-marker-icon:not(.other-people) {
+        filter: hue-rotate(180deg);
+    }
+
+    .eye {
+        position: absolute;
+        display: block;
+        top: 0.7em;
+        right: 0.7em;
+        z-index: 1000;
+        cursor: pointer;
+        padding: 0.33em;
+        pointer-events: all;
+
+        svg {
+            display: block;
+            width: 32px;
+            aspect-ratio: 1;
+            opacity: 0.67;
+        }
+
+        .show {
+            display: none;
+        }
+    }
+
+    &:has(#hide-others-check:checked) {
+        .eye .show {
+            display: block;
+        }
+
+        .eye .hide {
+            display: none;
+        }
+
+        img.leaflet-marker-icon.other-people,
+        img.leaflet-marker-shadow.other-people
+        {
+            display: none;
+        }
+    }
 }

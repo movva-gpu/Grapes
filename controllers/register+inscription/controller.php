@@ -96,10 +96,15 @@ function validate_registration(bool $from_inside = false): void
         }
     }
 
-    $name       = htmlentities($_POST['name']);
-    $fname      = htmlentities($_POST['fname']);
-    $nick       = empty($_POST['nick']) || !isset($_POST['nick']) ?
-                    htmlentities($_POST['nick']) : null;
+    $name  = htmlentities($_POST['name']);
+    $fname = htmlentities($_POST['fname']);
+    
+    $nick = null;
+    if (!empty($_POST['nick']) || isset($_POST['nick']))
+    {
+        $nick = htmlentities($_POST['nick']);
+    }
+     
     $gender     = htmlentities($_POST['gender']);
     $email      = htmlentities($_POST['mail']);
     $passwd     = htmlentities($_POST['passwd']);

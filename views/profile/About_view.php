@@ -228,7 +228,7 @@ const editMode = () => {
 };
 
 const exitForm = () => {
-    let confirmPrompt = confirm('Êtes vous sûr ?');
+    const confirmPrompt = confirm('Êtes vous sûr ?');
     if (confirmPrompt) document.querySelector('.profile').innerHTML = window.currentPage;
 };
 

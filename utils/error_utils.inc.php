@@ -83,4 +83,6 @@ enum ErrorTypes
      *  To use when an action is performed without being logged in.
      */
     case NOT_LOGGED_IN;
+
+    case BAD_FORMAT;
 }
