@@ -20,6 +20,6 @@ include root_path('vendor/autoload.php');
 
 garden_by_id(intval($_GET['id']), action: DBActions::DELETE);
 
-header('Location: /admin/gardens.php');
+header('Location: /gestion/gardens.php');
 exit;
 

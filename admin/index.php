@@ -42,9 +42,9 @@ $users = get_users();
             Et il y a <?= count($users) ?> utilisateurs enregistrés sur le site.
         </p>
         <br>
-        <a href="<?= SITE_URL ?>/admin/gardens.php">Gestion des jardins</a>
+        <a href="<?= SITE_URL ?>/gestion/gardens.php">Gestion des jardins</a>
         &nbsp;&nbsp;&nbsp;
-        <a href="<?= SITE_URL ?>/admin/users.php">Gestion des utilisateurs</a>
+        <a href="<?= SITE_URL ?>/gestion/users.php">Gestion des utilisateurs</a>
     </main>
 </body>
 </html>

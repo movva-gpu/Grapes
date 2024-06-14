@@ -16,7 +16,7 @@ require_once __ROOT__ . DIRECTORY_SEPARATOR .
 require_once root_path('conf/config.inc.php');
 include root_path('vendor/autoload.php');
 
-if (!isset($_GET['id'])) header('Location: /admin/gardens.php');
+if (!isset($_GET['id'])) header('Location: /gestion/gardens.php');
 
 $garden = garden_by_id(intval($_GET['id']));
 

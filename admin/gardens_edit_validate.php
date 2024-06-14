@@ -125,5 +125,5 @@ try
     
 }
 
-header('Location: /admin/gardens.php');
+header('Location: /gestion/gardens.php');
 exit;

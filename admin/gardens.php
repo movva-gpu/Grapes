@@ -69,8 +69,8 @@ $users = get_users();
         <b>Adresse:</b> <?= $garden['garden_street_number'] . ' ' . $garden['garden_street_name'] ?><br>
     </p>
 
-    <a href="/admin/gardens_edit.php?id=<?= $garden['garden_id'] ?>">Modifier</a>
-    <a href="/admin/gardens_delete.php?id=<?= $garden['garden_id'] ?>">Supprimer</a>
+    <a href="/gestion/gardens_edit.php?id=<?= $garden['garden_id'] ?>">Modifier</a>
+    <a href="/gestion/gardens_delete.php?id=<?= $garden['garden_id'] ?>">Supprimer</a>
 
     <footer>
         <b>Créé le</b> <?= $created_at_date ?><br>
