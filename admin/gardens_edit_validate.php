@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 if (session_status() === PHP_SESSION_ACTIVE)
 {
-    \Safe\session_abort();
+    session_abort();
 }
 
 error_reporting(E_ALL);
@@ -119,7 +119,7 @@ try
 
 } catch (PDOException $err)
 {
-    \Safe\error_log($err->__toString());
+    error_log($err->__toString());
     echo ErrorTypes::SQL_ERROR;
     
     

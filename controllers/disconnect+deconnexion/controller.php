@@ -6,7 +6,7 @@ function index(): void
     
     unset($_SESSION['user_id']);
 
-    \Safe\session_write_close();
+    session_write_close();
 
     header('Location: /connexion');
     exit;

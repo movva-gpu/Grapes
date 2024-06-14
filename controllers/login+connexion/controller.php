@@ -79,7 +79,7 @@ function validate(): void
     }
 
     $_SESSION['user_id'] = $user['user_id'];
-    \Safe\session_write_close();
+    session_write_close();
 
     header('Location: /profile/about');
     exit;

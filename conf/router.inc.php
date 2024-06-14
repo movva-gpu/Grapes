@@ -19,13 +19,13 @@ if (isset($_SESSION['user_id']))
     if ($user === false || empty($user))
     {
         unset($_SESSION['user_id']);
-        \Safe\session_write_close();
+        session_write_close();
     }
 
     $GLOBALS['user'] = $user;
 }
 
-\Safe\session_abort();
+session_abort();
 
 require_once separate_path($controller_dir . '/controller.php');
 

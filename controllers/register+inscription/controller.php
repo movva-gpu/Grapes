@@ -196,7 +196,7 @@ function validate_registration(bool $from_inside = false): void
         $stmt->execute();
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         set_session_error(ErrorTypes::SQL_ERROR);
         header('Location: /register');
         exit;
@@ -205,7 +205,7 @@ function validate_registration(bool $from_inside = false): void
     $mailer = new PHPMailer(true);
     $verification_url = SITE_URL . '/register/validate/account?token=' . urlencode($token);
 
-    \Safe\session_abort();
+    session_abort();
 
     if(send_verification_mail($mailer, $email, $fname, $name, $verification_url) === true) {
         echo '👍';
@@ -218,7 +218,7 @@ function validate_registration(bool $from_inside = false): void
     users_by_email($email, action: DBActions::DELETE);
     header('Location: /inscription');
     
-    \Safe\session_abort();
+    session_abort();
     exit;
 }
 
@@ -283,7 +283,7 @@ function send_verification_mail(PHPMailer $mailer, string $email, string $fname,
         return true;
     } catch (Exception $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         return false;
     }
 }

@@ -98,5 +98,5 @@ unset($_SESSION['error']);
 </html>
 
 <?php
-\Safe\session_write_close();
+session_write_close();
 ?>

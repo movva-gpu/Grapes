@@ -16,7 +16,7 @@ while (true)
     if (file_exists($queue_file))
     {
         echo timestamp() . "queue.txt found!\r\n";
-        $queue = \Safe\file($queue_file, FILE_IGNORE_NEW_LINES);
+        $queue = file($queue_file, FILE_IGNORE_NEW_LINES);
         $queue = array_filter($queue, function(?string $line)
         {
             return !is_null($line) && !empty($line);
@@ -37,7 +37,7 @@ while (true)
                     if (compress_image_to_avif($file_path))
                     {
                         echo timestamp() . "Compressed $file_path successfully\r\n";
-                        \Safe\file_put_contents($queue_file, implode(PHP_EOL, $queue));
+                        file_put_contents($queue_file, implode(PHP_EOL, $queue));
                     } else
                     {
                         echo timestamp() . "Failed to compress image to AVIF: $file_path\r\n";
@@ -46,12 +46,12 @@ while (true)
                 }
             }
         } else {
-            $uploads_dir = \Safe\glob(root_path('assets/uploads/*'));
+            $uploads_dir = glob(root_path('assets/uploads/*'));
             if (!empty($uploads_dir))
             {
                 echo timestamp() . "cleaning uploads...\r\n";
                 foreach ($uploads_dir as $key => $value) {
-                    \Safe\unlink($value);
+                    unlink($value);
                 }
             } else
             {
@@ -80,7 +80,7 @@ function compress_image_to_avif(string $file_path): bool
 
         echo $command;
         
-        \Safe\exec($command, $out, $return_var);
+        exec($command, $out, $return_var);
 
         if (!empty($out))
         {

@@ -210,7 +210,7 @@ HTML;
 $profile_form = str_replace(PHP_EOL, '', $profile_form);
 $profile_form = str_replace('    ', ' ', $profile_form);
 
-$user_json = \Safe\json_encode($user_no_entities);
+$user_json = json_encode($user_no_entities);
 
 // echo $profile_form;
 

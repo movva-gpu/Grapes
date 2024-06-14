@@ -14,7 +14,7 @@ function db_connect(): PDO|false
         return $db;
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         return false;
     }
 }
@@ -31,7 +31,7 @@ function get_users(?PDO $db = null): array|bool
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         return false;
     }
 }
@@ -57,7 +57,7 @@ function users_by_email(string $email, ?PDO $db = null, DBActions $action = DBAc
         }
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         return false;
     }
 }
@@ -83,7 +83,7 @@ function user_by_id(int $id, ?PDO $db = null, DBActions $action = DBActions::SEL
         }
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         return false;
     }
 }
@@ -109,7 +109,7 @@ function user_by_uuid(string $uuid, ?PDO $db = null, DBActions $action = DBActio
         }
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         return false;
     }
 }
@@ -135,7 +135,7 @@ function user_by_nickname_or_mail(string $email_or_nickname, ?PDO $db = null, DB
         }
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         return false;
     }
 }
@@ -153,7 +153,7 @@ function get_user_by_validation_token(string $token, ?PDO $db = null): array|fal
         return $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         return false;
     }
 }
@@ -175,7 +175,7 @@ function validate_account_by_token(mixed $user, ?PDO $db = null): bool
         return true;
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         return false;
     }
 }
@@ -201,7 +201,7 @@ function gardens_by_user_id(int $id, ?PDO $db = null, DBActions $action = DBActi
         }
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         return false;
     }
 }
@@ -218,7 +218,7 @@ function get_gardens(?PDO $db = null): array|bool
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         return false;
     }
 }
@@ -244,7 +244,7 @@ function garden_by_id(int $id, ?PDO $db = null, DBActions $action = DBActions::S
         }
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         return false;
     }
 }
@@ -260,8 +260,8 @@ function encrypt(string $unencrypted_value): string
 }
 
 function decrypt(string $encrypted_value): string {
-    list($encrypted_data, $iv) = explode('::', \Safe\base64_decode($encrypted_value), 2);
-    return \Safe\openssl_decrypt($encrypted_data, OPENSSL_METHOD, OPENSSL_SECRET, iv: $iv);
+    list($encrypted_data, $iv) = explode('::', base64_decode($encrypted_value), 2);
+    return openssl_decrypt($encrypted_data, OPENSSL_METHOD, OPENSSL_SECRET, iv: $iv);
 }
 
 enum DBActions

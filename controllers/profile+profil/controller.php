@@ -59,7 +59,7 @@ function edit(): void
     }
 
     $queue_path = root_path('queue.txt');
-    $queue_file = \Safe\file_get_contents($queue_path);
+    $queue_file = file_get_contents($queue_path);
     $queue      = explode(PHP_EOL, $queue_file);
 
     if (!empty($_FILES) && !empty($_FILES['pfp']['name']))
@@ -67,8 +67,8 @@ function edit(): void
         $tmp_path  = $_FILES['pfp']['tmp_name'];
         $path_info = pathinfo($_FILES['pfp']['name']);
 
-        $new_file_name    = 'pfp' . '_' . \Safe\date('Ymd_Gis') . '.' . $path_info['extension'];
-        $new_file_name_db = 'pfp' . '_' . \Safe\date('Ymd_Gis');
+        $new_file_name    = 'pfp' . '_' . date('Ymd_Gis') . '.' . $path_info['extension'];
+        $new_file_name_db = 'pfp' . '_' . date('Ymd_Gis');
         $new_file_path    = root_path('assets/uploads/' . $new_file_name);
 
         if (move_uploaded_file($tmp_path, $new_file_path))
@@ -85,18 +85,18 @@ function edit(): void
                 $stmt->execute();
             } catch (PDOException $e)
             {
-                \Safe\error_log('Something went wrong with SQL:' . "\r\n" . $e);
+                error_log('Something went wrong with SQL:' . "\r\n" . $e);
                 set_session_error(ErrorTypes::SQL_ERROR);
                 header('Location: /profile/about');
                 exit;
             }
 
-            \Safe\file_put_contents($queue_path, implode(PHP_EOL, $queue));
+            file_put_contents($queue_path, implode(PHP_EOL, $queue));
 
-            foreach (\Safe\glob(root_path('assets/pfp/' . $user['user_profile_picture_filename'] . '*')) as $file) {
+            foreach (glob(root_path('assets/pfp/' . $user['user_profile_picture_filename'] . '*')) as $file) {
                 if (explode('_', $file)[0] === '000') continue;
                 if (explode('_', $file)[0] === '001') continue;
-                \Safe\unlink($file);
+                unlink($file);
             }
 
             echo '👍';
@@ -186,7 +186,7 @@ function edit(): void
 
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         set_session_error(ErrorTypes::SQL_ERROR);
         header('Location: /profile/about');
         exit;

@@ -2,7 +2,7 @@
 
 if (session_status() === PHP_SESSION_ACTIVE)
 {
-    \Safe\session_abort();
+    session_abort();
 }
 
 error_reporting(E_ALL);

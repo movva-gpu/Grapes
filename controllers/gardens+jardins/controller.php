@@ -164,7 +164,7 @@ set_session_error(ErrorTypes::SQL_ERROR);
 
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         echo "a";
 exit;
 set_session_error(ErrorTypes::SQL_ERROR);
@@ -333,7 +333,7 @@ function validateedit(): void
 
     } catch (PDOException $err)
     {
-        \Safe\error_log($err);
+        error_log($err);
         set_session_error(ErrorTypes::SQL_ERROR);
         header('Location: /gardens/edit?id=' . decrypt($_POST['id']));
         exit;

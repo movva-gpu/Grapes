@@ -84,5 +84,5 @@ function get_subdirectories(string $directory): array
  */
 function parse_url_path(string $url): string
 {
-    return \Safe\parse_url($url)['path'];
+    return parse_url($url)['path'];
 }
