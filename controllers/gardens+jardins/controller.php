@@ -3,7 +3,7 @@
 function index(): void {
     if (!isset($GLOBALS['user']))
     {
-        set_session_error(ErrorTypes::NOT_LOGGED_IN);
+        set_session_error(ErrorTypes::NOT_LOGGED_IN, __LINE__);
         header('Location: /login');
         exit;
     }
@@ -28,7 +28,7 @@ function add(): void
 {
     if (!isset($GLOBALS['user']))
     {
-        set_session_error(ErrorTypes::NOT_LOGGED_IN);
+        set_session_error(ErrorTypes::NOT_LOGGED_IN, __LINE__);
         header('Location: /login');
         exit;
     }
@@ -54,7 +54,7 @@ function validate(): void
     {
         echo "a";
 exit;
-set_session_error(ErrorTypes::SQL_ERROR);
+set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
         header('Location: /gardens/add');
         exit;
     }
@@ -101,12 +101,12 @@ set_session_error(ErrorTypes::SQL_ERROR);
     {
         if (!isset($_POST[$field]) && $field_req['required'])
         {
-            set_session_error(ErrorTypes::MISSING_FIELD, $field);
+            set_session_error(ErrorTypes::MISSING_FIELD, $field, __LINE__);
             header('Location: /gardens/add');
             exit;
         } else if ((strlen($_POST[$field]) > $field_req['max_length']) && ($field_req['is_number'] === false))
         {
-            set_session_error(ErrorTypes::FIELD_TOO_LONG, $field);
+            set_session_error(ErrorTypes::FIELD_TOO_LONG, $field, __LINE__);
             header('Location: /gardens/add');
             exit;
         } 
@@ -117,7 +117,7 @@ set_session_error(ErrorTypes::SQL_ERROR);
             (intval($_POST[$field]) === 0 && !is_numeric($_POST[$field])))
         )
         {
-            set_session_error(ErrorTypes::BAD_FORMAT, $field);
+            set_session_error(ErrorTypes::BAD_FORMAT, $field, __LINE__);
             header('Location: /gardens/add');
             exit;
         }
@@ -167,7 +167,7 @@ set_session_error(ErrorTypes::SQL_ERROR);
         error_log($err);
         echo "a";
 exit;
-set_session_error(ErrorTypes::SQL_ERROR);
+set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
         header('Location: /gardens/add');
         exit;
     }
@@ -177,7 +177,7 @@ function edit(): void
 {
     if (!isset($GLOBALS['user']))
     {
-        set_session_error(ErrorTypes::NOT_LOGGED_IN);
+        set_session_error(ErrorTypes::NOT_LOGGED_IN, __LINE__);
         header('Location: /inscription');
         exit;
     }
@@ -194,7 +194,7 @@ function edit(): void
     {
         echo "a";
 exit;
-set_session_error(ErrorTypes::SQL_ERROR);
+set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
         header('Location: /gardens');
         exit;
     }
@@ -218,7 +218,7 @@ function validateedit(): void
 
     if (!$user)
     {
-        set_session_error(ErrorTypes::SQL_ERROR);
+        set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
         header('Location: /gardens/edit?id=' . decrypt($_POST['id']));
         exit;
     }
@@ -228,7 +228,7 @@ function validateedit(): void
 
     if (!$garden)
     {
-        set_session_error(ErrorTypes::SQL_ERROR);
+        set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
         header('Location: /gardens/edit?id=' . decrypt($_POST['id']));
         exit;
     }
@@ -270,12 +270,12 @@ function validateedit(): void
     {
         if (!isset($_POST[$field]) && $field_req['required'])
         {
-            set_session_error(ErrorTypes::MISSING_FIELD, $field);
+            set_session_error(ErrorTypes::MISSING_FIELD, $field, __LINE__);
             header('Location: /gardens/edit?id=' . decrypt($_POST['id']));
             exit;
         } else if ((strlen($_POST[$field]) > $field_req['max_length']) && ($field_req['is_number'] === false))
         {
-            set_session_error(ErrorTypes::FIELD_TOO_LONG, $field);
+            set_session_error(ErrorTypes::FIELD_TOO_LONG, $field, __LINE__);
             header('Location: /gardens/edit?id=' . decrypt($_POST['id']));
             exit;
         } 
@@ -286,7 +286,7 @@ function validateedit(): void
             (intval($_POST[$field]) === 0 && !is_numeric($_POST[$field])))
         )
         {
-            set_session_error(ErrorTypes::BAD_FORMAT, $field);
+            set_session_error(ErrorTypes::BAD_FORMAT, $field, __LINE__);
             header('Location: /gardens/edit?id=' . decrypt($_POST['id']));
             exit;
         }
@@ -334,7 +334,7 @@ function validateedit(): void
     } catch (PDOException $err)
     {
         error_log($err);
-        set_session_error(ErrorTypes::SQL_ERROR);
+        set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
         header('Location: /gardens/edit?id=' . decrypt($_POST['id']));
         exit;
     }
@@ -346,7 +346,7 @@ function delete(): void {
 
     if (!$user)
     {
-        set_session_error(ErrorTypes::SQL_ERROR);
+        set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
         header('Location: /gardens');
         exit;
     }
@@ -356,7 +356,7 @@ function delete(): void {
 
     if (!$garden)
     {
-        set_session_error(ErrorTypes::SQL_ERROR);
+        set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
         header('Location: /gardens');
         exit;
     }
@@ -368,7 +368,7 @@ function delete(): void {
         exit;
     }
     
-    set_session_error(ErrorTypes::SQL_ERROR);
+    set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
     header('Location: /gardens');
     exit;
 }

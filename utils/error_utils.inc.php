@@ -1,10 +1,12 @@
 <?php
 
-function set_session_error(ErrorTypes $error_type, ?string $message = null, bool $close_session = true): bool|null
+function set_session_error(ErrorTypes $error_type, ?string $message = null, bool $close_session = true, ?int $line = null): bool|null
 {
     if (session_status() !== PHP_SESSION_ACTIVE) session_start();
     if (!!$message) $error = [ 'error' => ['message' => $message, 'type' => $error_type] ];
     else $error = ['error' => ['type' => $error_type]];
+
+    if (!is_null($line)) $error['line'] = $line;
 
     $_SESSION['error'] = $error;
     if ($close_session) return session_write_close();
