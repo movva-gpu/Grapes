@@ -17,7 +17,7 @@ map.on('dblclick', e => {
     const createMap = confirm('Voulez vous créer un jardin aux coordonnées ' + (Math.round(e.latlng.lat * 1e4) / 1e4) + ', ' + (Math.round(e.latlng.lng * 1e4) / 1e4) + ' ?');
     
     if (createMap) {
-        open(siteURL + '/gardens/add?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng);
+        open(siteURL + '/gardens/add?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng, '_self');
     }
 });
 
@@ -29,7 +29,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 const deleteGarden = (gardenID, userUUID) => {
     const confirmation = confirm('Êtes vous sûr de vouloir faire cela ? Cette action est irréversible.');
     if (confirmation) {
-        open(siteURL + '/gardens/delete?id=' + gardenID + '&user_uuid=' + userUUID);
+        open(siteURL + '/gardens/delete?id=' + gardenID + '&user_uuid=' + userUUID, '_self');
     }
 };
 
