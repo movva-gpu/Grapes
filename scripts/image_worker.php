@@ -88,7 +88,7 @@ function compress_image_to_avif(string $file_path): bool
 
         if (PHP_OS === 'Linux')
         {
-            exec($command, $out, $return_var);
+            exec($linux_command, $out, $return_var);
         } else
         {
             exec($command, $out, $return_var);
