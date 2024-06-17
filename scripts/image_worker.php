@@ -73,14 +73,26 @@ function compress_image_to_avif(string $file_path): bool
 
         $out        = null;
         $return_var = null;
-        $command    = 'magick ' . $file_path .
+
+        $command = 'magick ' . $file_path .
+            ' -resize ' . 'x' . $res .
+            ' -quality 95' . ' -gravity Center -crop ' . $res . 'x' . $res .
+            ' ' . $output_file;
+
+        $linux_command = 'convert ' . $file_path .
             ' -resize ' . 'x' . $res .
             ' -quality 95' . ' -gravity Center -crop ' . $res . 'x' . $res .
             ' ' . $output_file;
 
         echo $command;
-        
-        exec($command, $out, $return_var);
+
+        if (PHP_OS === 'Linux')
+        {
+            exec($command, $out, $return_var);
+        } else
+        {
+            exec($command, $out, $return_var);
+        }
 
         if (!empty($out))
         {
