@@ -84,13 +84,14 @@ function compress_image_to_avif(string $file_path): bool
             ' -quality 95' . ' -gravity Center -crop ' . $res . 'x' . $res .
             ' ' . $output_file;
 
-        echo $command;
-
+            
         if (PHP_OS === 'Linux')
         {
+            echo $linux_command;
             exec($linux_command, $out, $return_var);
         } else
         {
+            echo $command;
             exec($command, $out, $return_var);
         }
 

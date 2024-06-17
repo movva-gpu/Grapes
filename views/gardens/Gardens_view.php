@@ -73,6 +73,8 @@ $markers_js = (function () use ($months) {
 
         $uuid = encrypt($GLOBALS['user']['user_uuid']);
 
+        echo "!!$garden_id!!";
+
         $to_return[] = <<<JS
         
         const marker{$garden_id} = L.marker([$garden_latlng]).addTo(map);
@@ -95,7 +97,7 @@ $markers_js = (function () use ($months) {
     return implode(PHP_EOL, $to_return);
 })();
 
-$other_markers_js = (function (array $garden_user_ids) use ($months) {
+$other_markers_js = (function () use ($months, $garden_user_ids) {
     $to_return = [];
     foreach ($GLOBALS['gardens'] as $garden) {
         $garden_id          = $garden['garden_id'];
@@ -106,7 +108,10 @@ $other_markers_js = (function (array $garden_user_ids) use ($months) {
         $garden_n_plots     = $garden['garden_n_plots'];
         $plot_claim_link    = SITE_URL . '/plot/claim?garden_id=' . $garden_id;
 
+        echo "!!$garden_id!!";
+
         if (!empty(array_filter($garden_user_ids, function(int $id) use ($garden_id) {
+            echo "!!$id!!";
             return $garden_id === $id;
         })))
         {
