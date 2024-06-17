@@ -29,5 +29,11 @@
     "zypper",
     "troyes"
   ],
-  "conventionalCommits.scopes": ["build", "formatting", "backend", "github"]
+  "conventionalCommits.scopes": [
+    "build",
+    "formatting",
+    "backend",
+    "github",
+    "workers"
+  ]
 }
