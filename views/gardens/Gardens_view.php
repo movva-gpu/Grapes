@@ -109,9 +109,9 @@ $other_markers_js = (function () use ($months, $garden_user_ids) {
         $plot_claim_link    = SITE_URL . '/plot/claim?garden_id=' . $garden_id;
 
         echo "!!$garden_id!!";
+        var_dump($garden_user_ids);
 
         if (!empty(array_filter($garden_user_ids, function(int $id) use ($garden_id) {
-            echo "!!$id!!";
             return $garden_id === $id;
         })))
         {
