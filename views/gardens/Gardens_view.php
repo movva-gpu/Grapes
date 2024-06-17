@@ -35,7 +35,7 @@ const deleteGarden = (gardenID, userUUID) => {
 
 JS;
 
-$garden_user_ids = [];
+$GLOBALS['garden_user_ids'] = [];
 
 $months = [
     'Jan' => 'jan.',
@@ -56,7 +56,7 @@ $markers_js = (function () use ($months) {
     $to_return = [];
     foreach ($GLOBALS['user_gardens'] as $garden) {
         $garden_id          = $garden['garden_id'];
-        $garden_user_ids[]  = $garden_id;
+        $GLOBALS['garden_user_ids'][]  = $garden_id;
         $garden_name        = $garden['garden_name'];
         $garden_latlng      = $garden['garden_lat'] . ', ' . $garden['garden_long'];
         $garden_street_text = $garden['garden_street_number'] . ' ' . strtolower($garden['garden_street_name']);
@@ -72,8 +72,6 @@ $markers_js = (function () use ($months) {
         $date = $day . ' ' . $months[$month] . ' à ' . $hour;
 
         $uuid = encrypt($GLOBALS['user']['user_uuid']);
-
-        echo "!!$garden_id!!";
 
         $to_return[] = <<<JS
         
@@ -97,7 +95,7 @@ $markers_js = (function () use ($months) {
     return implode(PHP_EOL, $to_return);
 })();
 
-$other_markers_js = (function () use ($months, $garden_user_ids) {
+$other_markers_js = (function () use ($months) {
     $to_return = [];
     foreach ($GLOBALS['gardens'] as $garden) {
         $garden_id          = $garden['garden_id'];
@@ -108,10 +106,7 @@ $other_markers_js = (function () use ($months, $garden_user_ids) {
         $garden_n_plots     = $garden['garden_n_plots'];
         $plot_claim_link    = SITE_URL . '/plot/claim?garden_id=' . $garden_id;
 
-        echo "!!$garden_id!!";
-
-        if (!empty(array_filter($garden_user_ids, function(int $id) use ($garden_id) {
-            echo "!!$id!!";
+        if (!empty(array_filter($GLOBALS['garden_user_ids'], function(int $id) use ($garden_id) {
             return $garden_id === $id;
         })))
         {
@@ -159,7 +154,7 @@ $other_markers_js = (function () use ($months, $garden_user_ids) {
         JS;
     }
     return implode(PHP_EOL, $to_return);
-})($garden_user_ids);
+})();
 
 ?>
 
