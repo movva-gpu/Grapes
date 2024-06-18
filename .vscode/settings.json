@@ -6,14 +6,12 @@
     "cssnano",
     "d",
     "Danyella",
-    "'innatendu",
-    "Danyella",
-    "d",
     "deconnexion",
     "egulias",
     "Egulias",
     "Fernandes",
     "fontawesome",
+    "fullname",
     "latlng",
     "magick",
     "mariadb",
@@ -26,8 +24,7 @@
     "thecodingmachine",
     "troyes",
     "uglifyjs",
-    "zypper",
-    "troyes"
+    "zypper"
   ],
   "conventionalCommits.scopes": [
     "build",

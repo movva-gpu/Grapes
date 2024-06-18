@@ -38,12 +38,12 @@ function send(): void {
     {
         if (!isset($_GET[$field]) && $field_req['required'])
         {
-            set_session_error(ErrorTypes::MISSING_FIELD, $field, __LINE__);
+            set_session_error(ErrorTypes::MISSING_FIELD, $field, line: __LINE__);
             header('Location: /contact');
             exit;
         } else if (strlen($_GET[$field]) > $field_req['max_length'])
         {
-            set_session_error(ErrorTypes::FIELD_TOO_LONG, $field, __LINE__);
+            set_session_error(ErrorTypes::FIELD_TOO_LONG, $field, line: __LINE__);
             header('Location: /contact');
             exit;
         }

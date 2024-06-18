@@ -82,4 +82,8 @@ enum ErrorTypes
     case BAD_FORMAT;
 
     case MAIL_NOT_SENT;
+
+    case WENT_WRONG;
+    case ALREADY_RESERVING;
+    case TOO_MANY_PLOTS;
 }

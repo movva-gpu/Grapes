@@ -106,6 +106,12 @@ unset($_SESSION['error']);
                             case ErrorTypes::BAD_FORMAT:
                                 $to_return = 'Le format d\'un champ spécifié est incorrect';
                                 break;
+                            case ErrorTypes::ALREADY_RESERVING:
+                                $to_return = 'Vous êtes déjà en train de réserver';
+                                break;
+                            case ErrorTypes::TOO_MANY_PLOTS:
+                                $to_return = 'Toutes les parcelles sont déjà réservées';
+                                break;
                             default:
                                 $to_return = 'Une erreur s\'est produite, veuillez réessayer.';
                                 break;

@@ -15,7 +15,7 @@ function about(): void
 {
     if (!isset($GLOBALS['user']))
     {
-        set_session_error(ErrorTypes::NOT_LOGGED_IN, __LINE__);
+        set_session_error(ErrorTypes::NOT_LOGGED_IN, line: __LINE__);
         header('Location: /login');
         exit;
     }
@@ -53,7 +53,7 @@ function edit(): void
 
     if (!$user)
     {
-        set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
+        set_session_error(ErrorTypes::SQL_ERROR, line: __LINE__);
         header('Location: /profile/about');
         exit;
     }
@@ -86,7 +86,7 @@ function edit(): void
             } catch (PDOException $e)
             {
                 error_log('Something went wrong with SQL:' . "\r\n" . $e);
-                set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
+                set_session_error(ErrorTypes::SQL_ERROR, line: __LINE__);
                 header('Location: /profile/about');
                 exit;
             }
@@ -102,7 +102,7 @@ function edit(): void
             echo '👍';
         } else
         {
-            set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
+            set_session_error(ErrorTypes::SQL_ERROR, line: __LINE__);
             header('Location: /profile/about');
             exit;
         }
@@ -127,7 +127,7 @@ function edit(): void
     {
         if (strlen($_POST[$field]) > $field_req['max_length'])
         {
-            set_session_error(ErrorTypes::FIELD_TOO_LONG, $field, __LINE__);
+            set_session_error(ErrorTypes::FIELD_TOO_LONG, $field, line: __LINE__);
             header('Location: /register');
             exit;
         }
@@ -144,7 +144,7 @@ function edit(): void
         $display = DisplayName::REAL_NAME->value;
     } else
     {
-        set_session_error(ErrorTypes::BAD_FORMAT, $field, __LINE__);
+        set_session_error(ErrorTypes::BAD_FORMAT, $field, line: __LINE__);
         header('Location: /register');
         exit;
     }
@@ -187,7 +187,7 @@ function edit(): void
     } catch (PDOException $err)
     {
         error_log($err);
-        set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
+        set_session_error(ErrorTypes::SQL_ERROR, line: __LINE__);
         header('Location: /profile/about');
         exit;
     }

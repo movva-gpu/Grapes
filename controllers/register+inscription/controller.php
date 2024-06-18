@@ -85,12 +85,12 @@ function validate_registration(bool $from_inside = false): void
     {
         if (!isset($_POST[$field]) && $field_req['required'])
         {
-            set_session_error(ErrorTypes::MISSING_FIELD, $field, __LINE__);
+            set_session_error(ErrorTypes::MISSING_FIELD, $field, line: __LINE__);
             header('Location: /register');
             exit;
         } else if (strlen($_POST[$field]) > $field_req['max_length'])
         {
-            set_session_error(ErrorTypes::FIELD_TOO_LONG, $field, __LINE__);
+            set_session_error(ErrorTypes::FIELD_TOO_LONG, $field, line: __LINE__);
             header('Location: /register');
             exit;
         }
@@ -113,7 +113,7 @@ function validate_registration(bool $from_inside = false): void
 
     if ($passwd !== $passwd_rep)
     {
-        set_session_error(ErrorTypes::REPEATED_PASSWORD_NOT_EQUALS, __LINE__);
+        set_session_error(ErrorTypes::REPEATED_PASSWORD_NOT_EQUALS, line: __LINE__);
         header('Location: /register');
         exit;
     }
@@ -122,14 +122,14 @@ function validate_registration(bool $from_inside = false): void
 
     if(!$email_validator->isValid($email, new RFCValidation()))
     {
-        set_session_error(ErrorTypes::BAD_EMAIL_FORMAT, __LINE__);
+        set_session_error(ErrorTypes::BAD_EMAIL_FORMAT, line: __LINE__);
         header('Location: /register');
         exit;
     }
 
     if(!$email_validator->isValid($email, new DNSCheckValidation()))
     {
-        set_session_error(ErrorTypes::EMAIL_DOES_NOT_EXIST, __LINE__);
+        set_session_error(ErrorTypes::EMAIL_DOES_NOT_EXIST, line: __LINE__);
         header('Location: /register');
         exit;
     }
@@ -139,7 +139,7 @@ function validate_registration(bool $from_inside = false): void
 
     if ($db === false)
     {
-        set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
+        set_session_error(ErrorTypes::SQL_ERROR, line: __LINE__);
         header('Location: /register');
         exit;
     }
@@ -148,14 +148,14 @@ function validate_registration(bool $from_inside = false): void
 
     if ($users_with_same_email === false)
     {
-        set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
+        set_session_error(ErrorTypes::SQL_ERROR, line: __LINE__);
         header('Location: /register');
         exit;
     }
 
     if (!empty($users_with_same_email))
     {
-        set_session_error(ErrorTypes::ACCOUNT_WITH_EMAIL_ALREADY_EXISTS, __LINE__);
+        set_session_error(ErrorTypes::ACCOUNT_WITH_EMAIL_ALREADY_EXISTS, line: __LINE__);
         header('Location: /register');
         exit;
     }
@@ -200,7 +200,7 @@ function validate_registration(bool $from_inside = false): void
     } catch (PDOException $err)
     {
         error_log($err);
-        set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
+        set_session_error(ErrorTypes::SQL_ERROR, line: __LINE__);
         header('Location: /register');
         exit;
     }
@@ -217,7 +217,7 @@ function validate_registration(bool $from_inside = false): void
     }
 
     echo '👎';
-    set_session_error(ErrorTypes::VERIFICATION_MAIL_NOT_SENT, __LINE__);
+    set_session_error(ErrorTypes::VERIFICATION_MAIL_NOT_SENT, line: __LINE__);
     users_by_email($email, action: DBActions::DELETE);
     header('Location: /inscription');
     
@@ -303,7 +303,7 @@ function validate_account(bool $from_inside = false): void
 
     if (strlen($token) !== 60)
     {
-        set_session_error(ErrorTypes::WRONG_TOKEN, __LINE__);
+        set_session_error(ErrorTypes::WRONG_TOKEN, line: __LINE__);
         header('Location: /register');
         exit;
     }
@@ -312,21 +312,21 @@ function validate_account(bool $from_inside = false): void
 
     if($user === false)
     {
-        set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
+        set_session_error(ErrorTypes::SQL_ERROR, line: __LINE__);
         header('Location: /register');
         exit;
     }
 
     if(empty($user))
     {
-        set_session_error(ErrorTypes::WRONG_TOKEN, __LINE__);
+        set_session_error(ErrorTypes::WRONG_TOKEN, line: __LINE__);
         header('Location: /register');
         exit;
     }
 
     if (validate_account_by_token($user) === false)
     {
-        set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
+        set_session_error(ErrorTypes::SQL_ERROR, line: __LINE__);
         header('Location: /register');
         exit;
     }
