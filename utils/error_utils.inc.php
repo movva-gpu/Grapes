@@ -55,13 +55,6 @@ enum ErrorTypes
     case ACCOUNT_WITH_EMAIL_ALREADY_EXISTS;
 
     /** 
-     * To use when registering or changing user profile if there's an account
-     * with the specified email that already exists.
-     */
-    case ACCOUNT_WITH_NICKNAME_ALREADY_EXISTS;
-
-
-    /** 
      * To use when a verification mail for any operation could not be sent.
      */
     case VERIFICATION_MAIL_NOT_SENT;
@@ -89,4 +82,8 @@ enum ErrorTypes
     case BAD_FORMAT;
 
     case MAIL_NOT_SENT;
+
+    case WENT_WRONG;
+    case ALREADY_RESERVING;
+    case TOO_MANY_PLOTS;
 }

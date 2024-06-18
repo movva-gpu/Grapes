@@ -2,6 +2,24 @@
 
 $site_url = SITE_URL;
 
+if (isset($_GET['success']))
+{
+    switch ($_GET['success']) {
+        case 'plots':
+            echo '<div class="error">Demande de réservation prise en compte !<br>' .
+                'Vous recevrez un mail lorsque le propriétaire du jardin acceptera ou non votre demande</div>';
+            break;
+
+        case 'accept':
+            echo '<div class="error">Vous avez accepté la demande</div>';
+            break;
+        
+        default:
+            # code...
+            break;
+    }
+}
+
 $map_js = <<<JS
 
 const siteURL = '{$site_url}';
@@ -64,6 +82,8 @@ $markers_js = (function () use ($months) {
         $garden_n_plots     = $garden['garden_n_plots'];
         $garden_edit_link   = SITE_URL . '/gardens/edit?id=' . $garden_id;
 
+        $reservation_count = count(explode(',', $garden['_user_reserving'])) - 1;
+
         $current_time = date_create($garden['garden_created_at']);
         $day          = date_format($current_time, 'd');
         $month        = date_format($current_time, 'M');
@@ -81,7 +101,7 @@ $markers_js = (function () use ($months) {
             'posté par <i>vous</i> le <i>$date</i><br>' +
             '<b>Adresse&nbsp;: </b>{$garden_street_text}<br>' +
             '<b>Taille&nbsp;: </b>{$garden_size}<br>' +
-            '<b>Parcelles occupées&nbsp;: </b>N/A / {$garden_n_plots}</small><br>' +
+            '<b>Parcelles occupées&nbsp;: </b>{$reservation_count} / {$garden_n_plots}</small><br>' +
             '<div class="links" style="display: flex; align-items: center; gap: 0.33em;">' +
             '<a href="{$garden_edit_link}">Modifier</a>' +
             '<a class="delete-garden" href="javascript:void(0);" onclick="deleteGarden(`{$garden_id}`, `{$uuid}`)">' +
@@ -136,6 +156,8 @@ $other_markers_js = (function () use ($months) {
         $hour         = date_format($current_time, 'H:i');
 
         $date = $day . ' ' . $months[$month] . ' à ' . $hour;
+        
+        $reservation_count = count(explode(',', $garden['_user_reserving'])) - 1;
 
         $to_return[] = <<<JS
         
@@ -145,7 +167,7 @@ $other_markers_js = (function () use ($months) {
             'posté par <i>{$garden_owner_display_name}</i> le <i>{$date}</i><br>' +
             '<b>Adresse&nbsp;: </b>{$garden_street_text}<br>' +
             '<b>Taille&nbsp;: </b>{$garden_size}<br>' +
-            '<b>Parcelles occupées&nbsp;: </b>N/A / {$garden_n_plots}</small><br>' +
+            '<b>Parcelles occupées&nbsp;: </b>{$reservation_count} / {$garden_n_plots}</small><br>' +
             '<a href="{$plot_claim_link}">Réserver une parcelle</a>');
 
         L.DomUtil.addClass(marker{$garden_id}._icon, 'other-people');
@@ -159,13 +181,7 @@ $other_markers_js = (function () use ($months) {
 ?>
 
 <h1>Jardins</h1>
-
-<?php if(empty($GLOBALS['gardens'])): ?>
-    <h2>Il n'y a rien pour le moment...</h2>
-    <p>Mais vous pouvez ajouter un jardin <a href="/gardens/add">ici</a> !</p>
-<?php else: ?>
-
-<h2>Carte</h2>
+<br>
 
 <div class="map-wp">
     <label for="hide-others-check" class="eye" role="button" title="Cache les jardins des autres utilisateurs">
@@ -190,5 +206,3 @@ $other_markers_js = (function () use ($months) {
      crossorigin=""></script>
 
 <script><?= \JShrink\Minifier::minify($map_js . $markers_js . $other_markers_js); ?></script>
-
-<?php endif ?>

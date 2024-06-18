@@ -41,12 +41,12 @@ function validate(): void
     {
         if (!isset($_GET[$field]) && $field_req['required'])
         {
-            set_session_error(ErrorTypes::MISSING_FIELD, $field, __LINE__);
+            set_session_error(ErrorTypes::MISSING_FIELD, $field, line: __LINE__);
             header('Location: /login');
             exit;
         } else if (strlen($_GET[$field]) > $field_req['max_length'])
         {
-            set_session_error(ErrorTypes::FIELD_TOO_LONG, $field, __LINE__);
+            set_session_error(ErrorTypes::FIELD_TOO_LONG, $field, line: __LINE__);
             header('Location: /login');
             exit;
         }
@@ -59,21 +59,21 @@ function validate(): void
 
     if ($user === false)
     {
-        set_session_error(ErrorTypes::SQL_ERROR, __LINE__);
+        set_session_error(ErrorTypes::SQL_ERROR, line: __LINE__);
         header('Location: /login');
         exit;
     }
 
     if (empty($user))
     {
-        set_session_error(ErrorTypes::ACCOUNT_DOES_NOT_EXIST, __LINE__);
+        set_session_error(ErrorTypes::ACCOUNT_DOES_NOT_EXIST, line: __LINE__);
         header('Location: /login');
         exit;
     }
 
     if (!password_verify($passwd, $user['user_password_hash']))
     {
-        set_session_error(ErrorTypes::WRONG_PASSWORD, __LINE__);
+        set_session_error(ErrorTypes::WRONG_PASSWORD, line: __LINE__);
         header('Location: /login');
         exit;
     }

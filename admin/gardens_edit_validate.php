@@ -31,7 +31,7 @@ $EXPECTED_FIELDS = [
         'is_number' => true,
         'float' => true
     ],
-    'lat' => [
+    'long' => [
         'required' => true,
         'is_number' => true,
         'float' => true
