@@ -87,4 +87,6 @@ enum ErrorTypes
     case NOT_LOGGED_IN;
 
     case BAD_FORMAT;
+
+    case MAIL_NOT_SENT;
 }
