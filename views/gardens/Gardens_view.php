@@ -142,7 +142,7 @@ $other_markers_js = (function () use ($months) {
         const marker{$garden_id} = L.marker([$garden_latlng]).addTo(map);
         marker{$garden_id}.bindPopup('<h3>&laquo;&nbsp;{$garden_name}&nbsp;&raquo;</h3>' +
             '<small>' +
-            'posté par <i>{$garden_owner_display_name}</i> le <i>{$date}</i><br>' +
+            'posté par <i>{$garden_owner_display_name}</i>le <i>{$date}</i><br>' +
             '<b>Adresse&nbsp;: </b>{$garden_street_text}<br>' +
             '<b>Taille&nbsp;: </b>{$garden_size}<br>' +
             '<b>Parcelles occupées&nbsp;: </b>N/A / {$garden_n_plots}</small><br>' +
@@ -159,13 +159,7 @@ $other_markers_js = (function () use ($months) {
 ?>
 
 <h1>Jardins</h1>
-
-<?php if(empty($GLOBALS['gardens'])): ?>
-    <h2>Il n'y a rien pour le moment...</h2>
-    <p>Mais vous pouvez ajouter un jardin <a href="/gardens/add">ici</a> !</p>
-<?php else: ?>
-
-<h2>Carte</h2>
+<br>
 
 <div class="map-wp">
     <label for="hide-others-check" class="eye" role="button" title="Cache les jardins des autres utilisateurs">
@@ -190,5 +184,3 @@ $other_markers_js = (function () use ($months) {
      crossorigin=""></script>
 
 <script><?= \JShrink\Minifier::minify($map_js . $markers_js . $other_markers_js); ?></script>
-
-<?php endif ?>

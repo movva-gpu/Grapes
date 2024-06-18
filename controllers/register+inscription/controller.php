@@ -177,7 +177,7 @@ function validate_registration(bool $from_inside = false): void
             ) VALUES (
                 :uuid, :lname, :fname, :nick, :passwd, :email, :gender, :token
             )');
-        $stmt->bindParam(':uuie', $uuid);
+        $stmt->bindParam(':uuid', $uuid);
         $stmt->bindParam(':lname', $name);
         $stmt->bindParam(':fname', $fname);
 
