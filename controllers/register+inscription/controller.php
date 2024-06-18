@@ -96,6 +96,7 @@ function validate_registration(bool $from_inside = false): void
         }
     }
 
+    $uuid  = uniqid('usr_', true);
     $name  = htmlentities($_POST['name']);
     $fname = htmlentities($_POST['fname']);
     
@@ -165,6 +166,7 @@ function validate_registration(bool $from_inside = false): void
     {
         $stmt = $db->prepare(
             'INSERT INTO `users`(
+                `user_uuid`,
                 `user_last_name`,
                 `user_first_name`,
                 `user_nickname`,
@@ -173,8 +175,9 @@ function validate_registration(bool $from_inside = false): void
                 `user_gender`,
                 `user_validation_token`
             ) VALUES (
-                :lname, :fname, :nick, :passwd, :email, :gender, :token
+                :uuid, :lname, :fname, :nick, :passwd, :email, :gender, :token
             )');
+        $stmt->bindParam(':uuie', $uuid);
         $stmt->bindParam(':lname', $name);
         $stmt->bindParam(':fname', $fname);
 
