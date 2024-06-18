@@ -35,7 +35,7 @@ function is_current_page(string $pageName): bool
                 </div>
             </a>
 
-            <?php if(!isset($GLOBALS['user'])): ?>
+            <?php if(isset($GLOBALS['user'])): ?>
             <a href="/profil">
                     <div class="h">
                         <span class="main">Profil</span>
