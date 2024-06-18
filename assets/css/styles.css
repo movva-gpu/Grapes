@@ -219,7 +219,7 @@ main {
     }
 }
 
-input:is([type="text"]),
+input:is([type="text"], [type="email"], [type="password"]),
 textarea,
 select,
 button:not(.back, .edit) {
