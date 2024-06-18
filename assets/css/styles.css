@@ -235,7 +235,7 @@ button:not(.back, .edit) {
     border: 2px black solid;
 }
 
-input:is([type="text"]),
+input:is([type="text"], [type="email"], [type="password"]),
 select,
 button:not(.back, .edit) {
     border-radius: 1000vw;
@@ -977,4 +977,8 @@ header {
     position: fixed;
     background-color: #0008;
     backdrop-filter: blur(8px);
+}
+
+button[type="submit"] {
+    margin-top: 1rem;
 }
