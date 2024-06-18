@@ -1,62 +1,48 @@
-<?php
-function is_current_page(string $pageName): bool
-{
-    $current_dir = $GLOBALS['current_dir'];
-    foreach (explode('+', $current_dir) as $str)
-    {
-        if ($pageName === $str)
-        {
-            return true;
-        }
-    }
-
-    return false;
-} ?>
-
 <header>
     <nav>
-        <img src="/assets/logo.png" alt="Logo">
+        <img src="" alt="Logo">
         <div class="links">
-            <a href="/" <?= is_current_page('home') ? 'aria-current="page"' : '' ?>>
+            <a href="index.php">
                 <div class="h">
                     <span class="main">Accueil</span>
                 </div>
             </a>
             <div class="dropdown">
-                <a href="/jardins" class="dropdown-btn" <?= is_current_page('jardins') ? 'aria-current="page"' : '' ?>>
+                <a href="#" class="dropdown-btn">
                     <div class="h">
                         <span class="main">Les jardins</span>
                     </div>
                 </a>
+                <div class="dropdown-content">
+                    <a href="jardins.php">Liste des jardins </a>
+                    <a href="graines.php">Liste des graines</a>
+                </div>
             </div>
-            <a href="/contact" <?= is_current_page('contact') ? 'aria-current="page"' : '' ?>>
+            <a href="contact.php">
                 <div class="h">
                     <span class="main">Contactez-nous</span>
                 </div>
             </a>
 
-            <?php if(!isset($GLOBALS['user'])): ?>
-            <a href="/profil">
+            <a href="profile.php">
                     <div class="h">
-                        <span class="main">Profil</span>
+                        <span class="main">Profile</span>
                     </div>
-            </a>
-            <?php else: ?>
+                </a>
             <div class="co-ins">
-                <a href="/login">
+                <a href="connexion.php">
                     <div class="h">
                         <span class="main">Connexion</span>
                     </div>
                 </a>
                 /
-                <a href="/inscription">
+                <a href="inscription.php">
                     <div class="h">
                         <span class="main">Inscription</span>
                     </div>
                 </a>
+                
             </div>
-            <?php endif ?>
         </div>
     </nav>
 </header>
-

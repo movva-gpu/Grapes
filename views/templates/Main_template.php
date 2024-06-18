@@ -23,6 +23,23 @@ unset($_SESSION['error']);
 <body style="font-family: system-ui, -apple-system, sans-serif">
     <?php require views_path('shared/Header.inc.php'); ?>
 
+    <?php if ($view_name === 'Home'): ?>
+        <div class="hero">
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1 style="font-family: Skingrape">GRAPES</h1>
+            <p>Le co-jardinage c’est maintenant !</p>
+        </div>
+        <div class="hero-buttons">
+            <a href="/inscription" class="btn">Commencer </a>
+        </div>
+    </div>
+    <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="white" fill-opacity="1" d="M0,224L60,186.7C120,149,240,75,360,85.3C480,96,600,192,720,208C840,224,960,160,1080,149.3C1200,139,1320,181,1380,202.7L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+    </svg>
+</div>
+<?php endif ?>
+
     <main style="min-height: calc(90svh)">
         <?php if (!empty($error)): ?>
             <div class="error">
