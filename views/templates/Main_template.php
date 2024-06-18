@@ -40,7 +40,7 @@ unset($_SESSION['error']);
 </div>
 <?php endif ?>
 
-    <main style="min-height: calc(90svh)">
+    <main style="min-height: calc(90svh); padding-top: 3rem;">
         <?php if (!empty($error)): ?>
             <div class="error">
                     Erreur : <?= (function() use ($error)
