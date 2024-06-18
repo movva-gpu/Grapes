@@ -296,3 +296,5 @@ JS); ?></script>
         </p>
     <?php endif ?>
 </div>
+
+<a href="/disconnect">Se déconnecter</a>
